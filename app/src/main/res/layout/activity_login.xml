@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#083087"
+    tools:context=".view.Login">
+
+    <ImageView
+        android:id="@+id/logo"
+        android:layout_width="290dp"
+        android:layout_height="291dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/caminhao" />
+
+    <EditText
+        android:id="@+id/campo_email_login"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="70dp"
+        android:layout_marginEnd="30dp"
+        android:background="@color/white"
+        android:hint="Email"
+        android:textSize="30dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/logo"
+        tools:layout_editor_absoluteX="0dp" />
+
+    <EditText
+        android:id="@+id/campo_senha_login"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="30dp"
+        android:background="@color/white"
+        android:hint="Senha"
+        android:textSize="30dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/campo_email_login" />
+
+    <Button
+        android:id="@+id/botao_cadastrar_login"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:layout_marginStart="40dp"
+        android:layout_marginEnd="40dp"
+        android:text="Cadastrar"
+        android:textSize="20dp"
+        android:textColor="@color/black"
+        android:backgroundTint="@color/white"
+        app:layout_constraintTop_toBottomOf="@+id/campo_senha_login"
+        style="@style/Widget.MaterialComponents.Button.TextButton"
+        tools:layout_editor_absoluteX="16dp" />
+
+
+
+    <Button
+        android:id="@+id/botao_entrar_login"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_marginStart="40dp"
+        android:layout_marginEnd="40dp"
+        android:text="Entrar"
+        android:textSize="20dp"
+        android:textAllCaps="true"
+        android:textColor="@color/black"
+        android:backgroundTint="@color/white"
+        style="@style/Widget.MaterialComponents.Button.TextButton"
+        app:layout_constraintTop_toBottomOf="@+id/botao_cadastrar_login"
+        />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

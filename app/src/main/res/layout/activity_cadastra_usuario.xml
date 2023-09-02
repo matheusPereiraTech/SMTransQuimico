@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="20dp"
+    android:background="#083087"
+    tools:context=".view.CadastroUsuario">
+
+
+    <TextView
+        android:id="@+id/texto_cadastro"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="Cadastro"
+        android:textColor="@color/white"
+        android:textSize="40dp"
+        android:textStyle="bold" />
+
+
+    <EditText
+        android:id="@+id/campo_email_usuario"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:background="@color/white"
+        android:textColorHint="@color/black"
+        android:hint="Email"
+        android:textSize="30dp" />
+
+
+    <EditText
+        android:id="@+id/campo_senha_usuario"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:background="@color/white"
+        android:textColorHint="@color/black"
+        android:hint="Senha"
+        android:textSize="30dp" />
+
+    <Button
+        android:id="@+id/botao_salvar_usuario"
+        style="@style/Widget.MaterialComponents.Button.TextButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:backgroundTint="@color/black"
+        android:text="Salvar"
+        android:textColor="@color/white"
+        android:textSize="30dp" />
+</LinearLayout>

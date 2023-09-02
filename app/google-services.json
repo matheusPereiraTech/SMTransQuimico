@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "1037876731091",
+    "project_id": "smtransquimico",
+    "storage_bucket": "smtransquimico.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1037876731091:android:4bcd445e2f97fc88aa0826",
+        "android_client_info": {
+          "package_name": "com.example.smtransquimico"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1037876731091-21303vrne2pbhtcfa6253ea96tbalo4t.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC4EB8uDKWh-oIG20RaOa_xSKsFqHZM5iM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1037876731091-21303vrne2pbhtcfa6253ea96tbalo4t.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
