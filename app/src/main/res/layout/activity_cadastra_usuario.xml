@@ -7,7 +7,7 @@
     android:orientation="vertical"
     android:padding="20dp"
     android:background="#083087"
-    tools:context=".view.CadastroUsuario">
+    tools:context=".project.CadastroUsuario">
 
 
     <TextView
@@ -15,7 +15,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:text="Cadastro"
+        android:text="Cadastro Usuário"
         android:textColor="@color/white"
         android:textSize="40dp"
         android:textStyle="bold" />

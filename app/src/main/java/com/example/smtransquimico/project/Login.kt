@@ -1,4 +1,4 @@
-package com.example.smtransquimico.view
+package com.example.smtransquimico.project
 
 import android.content.Intent
 import android.graphics.Color
@@ -37,7 +37,6 @@ class Login : AppCompatActivity() {
 
     fun cliqueBotaoCadastrar() {
         botaoCadastrar.setOnClickListener {
-
             val intent = Intent(this, CadastroUsuario::class.java)
             startActivity(intent)
             finish()

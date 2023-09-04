@@ -1,4 +1,4 @@
-package com.example.smtransquimico.view
+package com.example.smtransquimico.project
 
 import android.content.Intent
 import android.graphics.Color

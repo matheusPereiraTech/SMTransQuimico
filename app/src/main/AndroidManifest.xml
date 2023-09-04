@@ -14,26 +14,26 @@
         android:theme="@style/Theme.SMTransQuimico"
         tools:targetApi="31">
         <activity
-            android:name=".view.Chat"
+            android:name=".project.Chat"
             android:exported="false" />
         <activity
-            android:name=".view.CadastraProduto"
+            android:name=".project.CadastraProduto"
             android:exported="false"
-            android:parentActivityName=".view.MenuPrincipal" />
+            android:parentActivityName=".project.MenuPrincipal" />
         <activity
-            android:name=".view.ConsultaUsuario"
+            android:name=".project.ConsultaUsuario"
             android:exported="false"
-            android:parentActivityName=".view.MenuPrincipal" />
+            android:parentActivityName=".project.MenuPrincipal" />
         <activity
-            android:name=".view.ListaProduto"
+            android:name=".project.ListaProduto"
             android:exported="false"
-            android:parentActivityName=".view.MenuPrincipal" />
+            android:parentActivityName=".project.MenuPrincipal" />
         <activity
-            android:name=".view.CadastroUsuario"
+            android:name=".project.CadastroUsuario"
             android:exported="false"
-            android:parentActivityName=".view.MenuPrincipal" />
+            android:parentActivityName=".project.MenuPrincipal" />
         <activity
-            android:name=".view.SplashScreen"
+            android:name=".project.SplashScreen"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -42,13 +42,13 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".view.Senha"
+            android:name=".project.Senha"
             android:exported="false" />
         <activity
-            android:name=".view.MenuPrincipal"
+            android:name=".project.MenuPrincipal"
             android:exported="false" />
         <activity
-            android:name=".view.Login"
+            android:name=".project.Login"
             android:exported="false" />
     </application>
 

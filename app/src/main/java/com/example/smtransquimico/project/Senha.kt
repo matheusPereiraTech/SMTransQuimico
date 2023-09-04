@@ -1,4 +1,4 @@
-package com.example.smtransquimico.view
+package com.example.smtransquimico.project
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
