@@ -1,4 +1,4 @@
-package com.example.smtransquimico.project
+package com.example.smtransquimico.data
 
 import android.content.Context
 import androidx.room.Database

@@ -14,26 +14,26 @@
         android:theme="@style/Theme.SMTransQuimico"
         tools:targetApi="31">
         <activity
-            android:name=".project.Chat"
+            android:name=".view.Chat"
             android:exported="false" />
         <activity
-            android:name=".project.CadastraProduto"
+            android:name=".view.produto.CadastraProduto"
             android:exported="false"
-            android:parentActivityName=".project.MenuPrincipal" />
+            android:parentActivityName=".view.MenuPrincipal" />
         <activity
-            android:name=".project.ConsultaUsuario"
+            android:name=".view.usuario.ConsultaUsuario"
             android:exported="false"
-            android:parentActivityName=".project.MenuPrincipal" />
+            android:parentActivityName=".view.MenuPrincipal" />
         <activity
-            android:name=".project.ListaProduto"
+            android:name=".view.produto.ListaProduto"
             android:exported="false"
-            android:parentActivityName=".project.MenuPrincipal" />
+            android:parentActivityName=".view.MenuPrincipal" />
         <activity
-            android:name=".project.CadastroUsuario"
+            android:name=".view.usuario.CadastroUsuario"
             android:exported="false"
-            android:parentActivityName=".project.MenuPrincipal" />
+            android:parentActivityName=".view.MenuPrincipal" />
         <activity
-            android:name=".project.SplashScreen"
+            android:name=".view.SplashScreen"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -42,13 +42,13 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".project.Senha"
+            android:name=".view.usuario.Senha"
             android:exported="false" />
         <activity
-            android:name=".project.MenuPrincipal"
+            android:name=".view.MenuPrincipal"
             android:exported="false" />
         <activity
-            android:name=".project.Login"
+            android:name=".view.Login"
             android:exported="false" />
     </application>
 

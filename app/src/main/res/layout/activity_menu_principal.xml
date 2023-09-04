@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="#083087"
     android:orientation="vertical"
-    tools:context=".project.MenuPrincipal">
+    tools:context=".view.MenuPrincipal">
 
     <Button
         android:id="@+id/botao_deslogar"

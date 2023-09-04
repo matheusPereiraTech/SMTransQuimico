@@ -1,4 +1,4 @@
-package com.example.smtransquimico.project
+package com.example.smtransquimico.view.produto
 
 import android.content.Intent
 import android.graphics.Color
@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.smtransquimico.R
 import com.example.smtransquimico.adapter.ListaProdutoAdapter
 import com.example.smtransquimico.model.Produto
+import com.example.smtransquimico.data.AppDatabase
 import kotlinx.coroutines.launch
 
 class ListaProduto : AppCompatActivity() {
@@ -27,7 +28,7 @@ class ListaProduto : AppCompatActivity() {
         initFindViewById()
     }
 
-    fun initFindViewById() {
+    private fun initFindViewById() {
         recyclerView = findViewById(R.id.recyclerview_lista_produto)
     }
 

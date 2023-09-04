@@ -1,4 +1,4 @@
-package com.example.smtransquimico.project
+package com.example.smtransquimico.view
 
 import android.content.Intent
 import android.graphics.Color
@@ -16,6 +16,10 @@ class SplashScreen : AppCompatActivity() {
         supportActionBar?.hide()
         window.statusBarColor = Color.parseColor("#083087")
 
+       initHandler()
+    }
+
+    private fun initHandler(){
         Handler(Looper.getMainLooper()).postDelayed({
             val intent = Intent(this, Login::class.java)
             startActivity(intent)

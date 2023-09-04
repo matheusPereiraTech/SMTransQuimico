@@ -1,4 +1,4 @@
-package com.example.smtransquimico.project
+package com.example.smtransquimico.view.produto
 
 import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
@@ -7,6 +7,7 @@ import android.widget.Button
 import androidx.lifecycle.lifecycleScope
 import com.example.smtransquimico.R
 import com.example.smtransquimico.model.Produto
+import com.example.smtransquimico.data.AppDatabase
 import com.google.android.material.textfield.TextInputEditText
 import kotlinx.coroutines.launch
 
@@ -31,7 +32,7 @@ class CadastraProduto : AppCompatActivity() {
         adicionarProduto()
     }
 
-    fun initExtras() {
+    private fun initExtras() {
         val produtoSerializable = intent.getSerializableExtra("Dados")
 
         if (produtoSerializable != null && produtoSerializable is Produto) {
@@ -46,7 +47,7 @@ class CadastraProduto : AppCompatActivity() {
         }
     }
 
-    fun initFindViewBydId() {
+    private fun initFindViewBydId() {
         campoCodigoProduto = findViewById(R.id.campo_codigo_produto)
         campoNomeProduto = findViewById(R.id.campo_nome_produto)
         campoTipoProduto = findViewById(R.id.campo_tipo_produto)
@@ -66,10 +67,11 @@ class CadastraProduto : AppCompatActivity() {
                         .adicionaProduto(produto)
                     finish()
                 } else {
-                        val produtoAtualizado = Produto(codigoProduto, nomeProduto, tipoProduto)
-                        produtoAtualizado.id = produto?.id ?: 0
-                        AppDatabase(this@CadastraProduto).pegarProdutoDao().atualizarProduto(produtoAtualizado)
-                        finish()
+                    val produtoAtualizado = Produto(codigoProduto, nomeProduto, tipoProduto)
+                    produtoAtualizado.id = produto?.id ?: 0
+                    AppDatabase(this@CadastraProduto).pegarProdutoDao()
+                        .atualizarProduto(produtoAtualizado)
+                    finish()
                 }
             }
         }

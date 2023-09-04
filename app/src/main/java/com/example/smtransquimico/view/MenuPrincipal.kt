@@ -1,4 +1,4 @@
-package com.example.smtransquimico.project
+package com.example.smtransquimico.view
 
 import android.content.Intent
 import android.graphics.Color
@@ -7,6 +7,9 @@ import android.os.Bundle
 import android.widget.Button
 import androidx.cardview.widget.CardView
 import com.example.smtransquimico.R
+import com.example.smtransquimico.view.produto.CadastraProduto
+import com.example.smtransquimico.view.produto.ListaProduto
+import com.example.smtransquimico.view.usuario.ConsultaUsuario
 import com.google.firebase.auth.FirebaseAuth
 
 class MenuPrincipal : AppCompatActivity() {
@@ -31,7 +34,7 @@ class MenuPrincipal : AppCompatActivity() {
         cliqueDeslogar()
     }
 
-    fun initFindViewById() {
+    private fun initFindViewById() {
         cardListaProduto = findViewById(R.id.card_lista_produto)
         cardCadastraProduto = findViewById(R.id.card_cadastra_produto)
         cardConsultaUsuario = findViewById(R.id.card_consulta_usuario)
@@ -39,35 +42,35 @@ class MenuPrincipal : AppCompatActivity() {
         botaoDeslogar = findViewById(R.id.botao_deslogar)
     }
 
-    fun cliqueListarProduto() {
+    private fun cliqueListarProduto() {
         cardListaProduto.setOnClickListener {
             val intent = Intent(this, ListaProduto::class.java)
             startActivity(intent)
         }
     }
 
-    fun cliqueCadastrarProduto() {
+    private fun cliqueCadastrarProduto() {
         cardCadastraProduto.setOnClickListener {
             val intent = Intent(this, CadastraProduto::class.java)
             startActivity(intent)
         }
     }
 
-    fun cliqueConsultarUsuario() {
+    private fun cliqueConsultarUsuario() {
         cardConsultaUsuario.setOnClickListener {
             val intent = Intent(this, ConsultaUsuario::class.java)
             startActivity(intent)
         }
     }
 
-    fun cliqueChat() {
+    private fun cliqueChat() {
         cardChat.setOnClickListener {
             val intent = Intent(this, Chat::class.java)
             startActivity(intent)
         }
     }
 
-    fun cliqueDeslogar(){
+    private fun cliqueDeslogar(){
         botaoDeslogar.setOnClickListener {
             FirebaseAuth.getInstance().signOut()
             val intent = Intent(this, Login::class.java)

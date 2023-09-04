@@ -1,4 +1,4 @@
-package com.example.smtransquimico.project
+package com.example.smtransquimico.data
 
 import androidx.room.Dao
 import androidx.room.Delete

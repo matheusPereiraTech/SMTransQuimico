@@ -1,4 +1,4 @@
-package com.example.smtransquimico.project
+package com.example.smtransquimico.view.usuario
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle

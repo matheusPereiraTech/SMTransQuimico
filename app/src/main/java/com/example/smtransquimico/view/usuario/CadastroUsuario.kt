@@ -1,4 +1,4 @@
-package com.example.smtransquimico.project
+package com.example.smtransquimico.view.usuario
 
 import android.content.Intent
 import android.graphics.Color
@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
 import com.example.smtransquimico.R
+import com.example.smtransquimico.view.Login
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.FirebaseNetworkException
 import com.google.firebase.auth.FirebaseAuth
@@ -29,13 +30,13 @@ class CadastroUsuario : AppCompatActivity() {
         cliqueSalvarUsuario()
     }
 
-    fun initFindViewById() {
+    private fun initFindViewById() {
         botaoSalvarUsuario = findViewById(R.id.botao_salvar_usuario)
         campoEmail = findViewById(R.id.campo_email_usuario)
         campoSenha = findViewById(R.id.campo_senha_usuario)
     }
 
-    fun cliqueSalvarUsuario() {
+    private fun cliqueSalvarUsuario() {
 
         botaoSalvarUsuario.setOnClickListener { view ->
 
@@ -76,7 +77,7 @@ class CadastroUsuario : AppCompatActivity() {
         }
     }
 
-    fun navegarTelaPrincipal() {
+    private fun navegarTelaPrincipal() {
         val intent = Intent(this, Login::class.java)
         startActivity(intent)
         finish()
