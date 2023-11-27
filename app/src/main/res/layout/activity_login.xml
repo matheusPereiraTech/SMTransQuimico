@@ -4,86 +4,116 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#083087"
-    tools:context=".view.Login">
+    android:background="@drawable/fundo_app"
+    tools:context=".view.login.LoginActivity">
 
     <ImageView
-        android:id="@+id/logo"
-        android:layout_width="290dp"
-        android:layout_height="291dp"
+        android:id="@+id/imgLogo"
+        android:layout_width="214dp"
+        android:layout_height="138dp"
+        android:layout_marginTop="70dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/caminhao" />
+        app:srcCompat="@drawable/logo" />
+
+    <TextView
+        android:id="@+id/txtLogo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="SMTransQuímico"
+        android:textSize="40sp"
+        android:textColor="@color/white"
+        android:textStyle="bold"
+        android:fontFamily="monospace"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/imgLogo"
+        />
 
     <EditText
-        android:id="@+id/campo_email_login"
+        android:id="@+id/edtEmailLogin"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="30dp"
-        android:layout_marginTop="70dp"
-        android:layout_marginEnd="30dp"
-        android:background="@color/white"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginTop="20dp"
+        android:inputType="textEmailAddress"
+        android:background="@drawable/borda_texto"
         android:hint="Email"
-        android:textSize="30dp"
+        android:autofillHints="emailAddress"
+        android:textSize="40dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/logo"
+        app:layout_constraintTop_toBottomOf="@+id/txtLogo"
         tools:layout_editor_absoluteX="0dp" />
 
     <EditText
-        android:id="@+id/campo_senha_login"
+        android:id="@+id/edtSenhaLogin"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="30dp"
+        android:layout_marginStart="20dp"
         android:layout_marginTop="20dp"
-        android:layout_marginEnd="30dp"
-        android:background="@color/white"
+        android:layout_marginEnd="20dp"
+        android:inputType="textPassword"
+        android:background="@drawable/borda_texto"
         android:hint="Senha"
-        android:textSize="30dp"
+        android:textSize="40dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/campo_email_login" />
+        app:layout_constraintTop_toBottomOf="@+id/edtEmailLogin" />
 
     <Button
-        android:id="@+id/botao_cadastrar_login"
-        style="@style/Widget.MaterialComponents.Button.TextButton"
+        android:id="@+id/btnCadastrarLogin"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="40dp"
         android:layout_marginTop="30dp"
         android:layout_marginEnd="40dp"
-        android:backgroundTint="@color/white"
+        android:textAllCaps="false"
         android:text="Cadastrar"
-        android:textColor="@color/black"
+        android:background="@drawable/borda_botao"
+        android:textColor="@color/white"
         android:textSize="20dp"
-        app:layout_constraintTop_toBottomOf="@+id/campo_senha_login"
-        tools:layout_editor_absoluteX="16dp" />
+        app:layout_constraintTop_toBottomOf="@+id/edtSenhaLogin"
+        />
 
 
     <Button
-        android:id="@+id/botao_entrar_login"
-        style="@style/Widget.MaterialComponents.Button.TextButton"
+        android:id="@+id/btnEntrarLogin"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="40dp"
         android:layout_marginTop="10dp"
         android:layout_marginEnd="40dp"
-        android:backgroundTint="@color/white"
+        android:background="@drawable/borda_botao"
         android:text="Entrar"
-        android:textAllCaps="true"
-        android:textColor="@color/black"
+        android:textAllCaps="false"
+        android:textColor="@color/white"
         android:textSize="20dp"
-        app:layout_constraintTop_toBottomOf="@+id/botao_cadastrar_login" />
+        app:layout_constraintTop_toBottomOf="@+id/btnCadastrarLogin" />
+
+    <Button
+        android:id="@+id/btnEsqueciSenha"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Esqueci a senha"
+        android:layout_gravity="center_horizontal"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:textAllCaps="false"
+        android:background="@drawable/borda_botao"
+        app:layout_constraintTop_toBottomOf="@id/btnEntrarLogin"
+        android:layout_marginTop="16dp"/>
 
     <com.google.android.gms.common.SignInButton
-        android:id="@+id/botao_google"
+        android:id="@+id/btnGoogle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/botao_entrar_login" />
+        app:layout_constraintTop_toBottomOf="@+id/btnEsqueciSenha" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

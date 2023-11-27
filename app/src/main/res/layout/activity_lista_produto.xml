@@ -5,10 +5,17 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".view.produto.ListaProduto">
+    tools:context=".view.produto.ListaPrincipalProdutoActivity">
+
+   <androidx.appcompat.widget.SearchView
+       android:id="@+id/barraPesquisaProduto"
+       android:layout_width="match_parent"
+       android:layout_height="wrap_content"
+       >
+   </androidx.appcompat.widget.SearchView>
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerview_lista_produto"
+        android:id="@+id/recyclerlListaProduto"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         />

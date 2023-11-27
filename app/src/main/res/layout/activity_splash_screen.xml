@@ -4,22 +4,23 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#083087"
+    android:background="@drawable/fundo_app"
     android:gravity="center"
     android:orientation="vertical"
-    tools:context=".view.SplashScreen">
+    tools:context=".view.splashscreen.SplashScreenActivity">
 
     <ImageView
-        android:id="@+id/logo_splashscreen"
-        android:layout_width="400dp"
-        android:layout_height="400dp"
-        android:src="@drawable/caminhao" />
+        android:id="@+id/imgSplashscreen"
+        android:layout_width="300dp"
+        android:layout_height="300dp"
+        android:src="@drawable/logo" />
 
     <TextView
-        android:id="@+id/texto_splashscreen"
+        android:id="@+id/txtSplashscreen"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
+        android:fontFamily="monospace"
         android:text="SMTransQuimico"
         android:textColor="@color/white"
         android:textSize="40dp"

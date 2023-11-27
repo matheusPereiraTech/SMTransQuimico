@@ -1,8 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
-    
-    <uses-permission android:name="android.permission.INTERNET"/>
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
+    <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.CAMERA" />
 
     <application
         android:allowBackup="true"
@@ -14,26 +21,51 @@
         android:theme="@style/Theme.SMTransQuimico"
         tools:targetApi="31">
         <activity
-            android:name=".view.Chat"
+            android:name=".view.chat.ChatBotActivity"
             android:exported="false" />
         <activity
-            android:name=".view.produto.CadastraProduto"
+            android:name=".view.produto.ListaProdutoExercitoActivity"
             android:exported="false"
-            android:parentActivityName=".view.MenuPrincipal" />
+            android:parentActivityName=".view.menu.MenuPrincipalActivity" />
         <activity
-            android:name=".view.usuario.ConsultaUsuario"
+            android:name=".view.produto.ListaProdutoPoliciactivity"
             android:exported="false"
-            android:parentActivityName=".view.MenuPrincipal" />
+            android:parentActivityName=".view.menu.MenuPrincipalActivity" />
         <activity
-            android:name=".view.produto.ListaProduto"
+            android:name=".view.produto.CadastraProdutoExercitoActivity"
             android:exported="false"
-            android:parentActivityName=".view.MenuPrincipal" />
+            android:parentActivityName=".view.menu.MenuPrincipalActivity" />
         <activity
-            android:name=".view.usuario.CadastroUsuario"
+            android:name=".view.produto.CadastraProdutoPoliciaActivity"
             android:exported="false"
-            android:parentActivityName=".view.MenuPrincipal" />
+            android:parentActivityName=".view.menu.MenuPrincipalActivity" />
         <activity
-            android:name=".view.SplashScreen"
+            android:name=".view.chat.ChatActivity"
+            android:exported="false" />
+        <activity
+            android:name=".view.chat.PerfilUsuarioActivity"
+            android:exported="false" />
+        <activity
+            android:name=".view.chat.UsuarioActivity"
+            android:exported="false" />
+        <activity
+            android:name=".view.produto.CadastraProdutoPrincipalActivity"
+            android:exported="false"
+            android:parentActivityName=".view.menu.MenuPrincipalActivity" />
+        <activity
+            android:name=".view.usuario.ConsultaUsuarioActivity"
+            android:exported="false"
+            android:parentActivityName=".view.menu.MenuPrincipalActivity" />
+        <activity
+            android:name=".view.produto.ListaPrincipalProdutoActivity"
+            android:exported="false"
+            android:parentActivityName=".view.menu.MenuPrincipalActivity" />
+        <activity
+            android:name=".view.usuario.CadastroUsuarioActivity"
+            android:exported="false"
+            android:parentActivityName=".view.menu.MenuPrincipalActivity" />
+        <activity
+            android:name=".view.splashscreen.SplashScreenActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -42,13 +74,13 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".view.usuario.Senha"
+            android:name=".view.login.RedefinirSenhaActivity"
             android:exported="false" />
         <activity
-            android:name=".view.MenuPrincipal"
+            android:name=".view.menu.MenuPrincipalActivity"
             android:exported="false" />
         <activity
-            android:name=".view.Login"
+            android:name=".view.login.LoginActivity"
             android:exported="false" />
     </application>
 

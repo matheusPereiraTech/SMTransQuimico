@@ -4,12 +4,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#083087"
+    android:background="@drawable/fundo_app"
     android:orientation="vertical"
-    tools:context=".view.MenuPrincipal">
+    tools:context=".view.menu.MenuPrincipalActivity">
 
     <Button
-        android:id="@+id/botao_deslogar"
+        android:id="@+id/btnDeslogar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="18dp"
@@ -28,17 +28,17 @@
         >
 
         <GridLayout
-            android:id="@+id/gridlayout_menu_principal"
+            android:id="@+id/gridMenuPrincipal"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:columnCount="2"
-            android:rowCount="2">
+            android:rowCount="4">
 
             <androidx.cardview.widget.CardView
-                android:id="@+id/card_chat"
+                android:id="@+id/cardChat"
                 android:layout_width="140dp"
                 android:layout_height="115dp"
-                android:layout_row="1"
+                android:layout_row="0"
                 android:layout_column="0"
                 android:layout_margin="8dp"
                 app:cardCornerRadius="20dp"
@@ -68,11 +68,11 @@
             </androidx.cardview.widget.CardView>
 
             <androidx.cardview.widget.CardView
-                android:id="@+id/card_cadastra_produto"
+                android:id="@+id/cardCadastraProduto"
                 android:layout_width="140dp"
                 android:layout_height="115dp"
-                android:layout_row="0"
-                android:layout_column="1"
+                android:layout_row="1"
+                android:layout_column="0"
                 android:layout_gravity="bottom"
                 android:layout_margin="8dp"
                 app:cardCornerRadius="20dp"
@@ -94,7 +94,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:text="Cadastrar Produto"
+                        android:text="Cadastrar Produto Principal"
                         android:textAlignment="center"
                         android:textColor="@color/black"
                         android:textStyle="bold" />
@@ -102,11 +102,11 @@
             </androidx.cardview.widget.CardView>
 
             <androidx.cardview.widget.CardView
-                android:id="@+id/card_lista_produto"
+                android:id="@+id/cardListaproduto"
                 android:layout_width="140dp"
                 android:layout_height="115dp"
-                android:layout_row="0"
-                android:layout_column="0"
+                android:layout_row="1"
+                android:layout_column="1"
                 android:layout_gravity="bottom"
                 android:layout_margin="8dp"
                 app:cardCornerRadius="20dp"
@@ -121,13 +121,14 @@
                     <ImageView
                         android:layout_width="50dp"
                         android:layout_height="50dp"
-                        android:src="@drawable/lista_produto" />
+                        android:layout_gravity="center"
+                        android:src="@drawable/icone_lista_principal" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:text="Produtos"
+                        android:text="Lista Principal"
                         android:textAlignment="center"
                         android:textColor="@color/black"
                         android:textStyle="bold" />
@@ -135,10 +136,10 @@
             </androidx.cardview.widget.CardView>
 
             <androidx.cardview.widget.CardView
-                android:id="@+id/card_consulta_usuario"
+                android:id="@+id/cardConsultaUsuario"
                 android:layout_width="140dp"
                 android:layout_height="115dp"
-                android:layout_row="1"
+                android:layout_row="0"
                 android:layout_column="1"
                 android:layout_gravity="bottom"
                 android:layout_margin="8dp"
@@ -161,6 +162,142 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:text="Usuário"
+                        android:textAlignment="center"
+                        android:textColor="@color/black"
+                        android:textStyle="bold" />
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/card_cadastrar_produto_exercito"
+                android:layout_width="140dp"
+                android:layout_height="115dp"
+                android:layout_row="2"
+                android:layout_column="0"
+                android:layout_gravity="bottom"
+                android:layout_margin="8dp"
+                app:cardCornerRadius="20dp"
+                app:cardElevation="10dp">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical|center_horizontal"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:layout_gravity="center"
+                        android:src="@drawable/icone_cadastra_exercito" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:text="Cadastrar Produto Exército"
+                        android:textAlignment="center"
+                        android:textColor="@color/black"
+                        android:textStyle="bold" />
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cardListaProdutoPolicia"
+                android:layout_width="140dp"
+                android:layout_height="115dp"
+                android:layout_row="3"
+                android:layout_column="1"
+                android:layout_gravity="bottom"
+                android:layout_margin="8dp"
+                app:cardCornerRadius="20dp"
+                app:cardElevation="10dp">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical|center_horizontal"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:layout_gravity="center"
+                        android:src="@drawable/icone_policia" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:text="Lista Polícia"
+                        android:textAlignment="center"
+                        android:textColor="@color/black"
+                        android:textStyle="bold" />
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cardListaProdutoExercito"
+                android:layout_width="140dp"
+                android:layout_height="115dp"
+                android:layout_row="2"
+                android:layout_column="1"
+                android:layout_gravity="bottom"
+                android:layout_margin="8dp"
+                app:cardCornerRadius="20dp"
+                app:cardElevation="10dp">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical|center_horizontal"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:layout_gravity="center"
+                        android:src="@drawable/icone_exercito" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:text="Lista Exército"
+                        android:textAlignment="center"
+                        android:textColor="@color/black"
+                        android:textStyle="bold" />
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cardCadastrarProdutoPolicia"
+                android:layout_width="140dp"
+                android:layout_height="115dp"
+                android:layout_row="3"
+                android:layout_column="0"
+                android:layout_gravity="bottom"
+                android:layout_margin="8dp"
+                app:cardCornerRadius="20dp"
+                app:cardElevation="10dp">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical|center_horizontal"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:layout_gravity="center"
+                        android:src="@drawable/icone_cadastra_produto_policia" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:text="Cadastrar Produto Polícia"
                         android:textAlignment="center"
                         android:textColor="@color/black"
                         android:textStyle="bold" />

@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/fundo_app"
+    android:padding="20dp"
+    tools:context=".view.produto.CadastraProdutoExercitoActivity">
+
+    <TextView
+        android:id="@+id/textoProdutoExercito"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="@color/white"
+        android:layout_alignParentTop="true"
+        android:gravity="center"
+        android:textSize="40dp"
+        android:textStyle="bold"
+        android:layout_marginTop="20dp"
+        android:text="Cadastro Produto Exército" />
+
+    <EditText
+        android:id="@+id/txtNumeroOrdem"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/textoProdutoExercito"
+        android:background="@drawable/borda_texto"
+        android:layout_marginTop="20dp"
+        android:inputType="number"
+        android:textSize="40dp"
+        android:hint="Número de ordem" />
+
+    <EditText
+        android:id="@+id/txtNomenclaturaProduto"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/txtNumeroOrdem"
+        android:background="@drawable/borda_texto"
+        android:layout_marginTop="20dp"
+        android:textSize="40dp"
+        android:hint="Nomenclatura" />
+
+    <EditText
+        android:id="@+id/txtTipoPCE"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/txtNomenclaturaProduto"
+        android:background="@drawable/borda_texto"
+        android:layout_marginTop="20dp"
+        android:textSize="40dp"
+        android:hint="Tipo de PCE" />
+
+    <Button
+        android:id="@+id/btnSalvarProdutoExercito"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="30dp"
+        android:background="@drawable/borda_botao"
+        android:layout_alignParentBottom="true"
+        android:text="Salvar" />
+
+</RelativeLayout>
