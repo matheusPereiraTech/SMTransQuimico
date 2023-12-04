@@ -20,36 +20,58 @@
         android:layout_marginTop="20dp"
         android:text="Cadastro Produto Exército" />
 
-    <EditText
-        android:id="@+id/txtNumeroOrdem"
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/inputTxtNumeroOrdem"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/textoProdutoExercito"
-        android:background="@drawable/borda_texto"
-        android:layout_marginTop="20dp"
-        android:inputType="number"
-        android:textSize="40dp"
-        android:hint="Número de ordem" />
+        >
 
-    <EditText
-        android:id="@+id/txtNomenclaturaProduto"
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/txtNumeroOrdem"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:maxLines="1"
+            android:layout_marginTop="20dp"
+            android:hint="Número de ordem"
+            android:inputType="number"
+            android:textSize="30dp" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/inputTxtNomenclaturaProduto"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/txtNumeroOrdem"
-        android:background="@drawable/borda_texto"
-        android:layout_marginTop="20dp"
-        android:textSize="40dp"
-        android:hint="Nomenclatura" />
+        android:layout_below="@id/inputTxtNumeroOrdem"
+        >
 
-    <EditText
-        android:id="@+id/txtTipoPCE"
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/txtNomenclaturaProduto"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:maxLines="1"
+            android:textSize="30dp"
+            android:hint="Nomenclatura"  />
+    </com.google.android.material.textfield.TextInputLayout>
+
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/inputTxtTipoPCE"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/txtNomenclaturaProduto"
-        android:background="@drawable/borda_texto"
-        android:layout_marginTop="20dp"
-        android:textSize="40dp"
-        android:hint="Tipo de PCE" />
+        android:layout_below="@id/inputTxtNomenclaturaProduto"
+        >
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/txtTipoPCE"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:maxLines="1"
+            android:hint="Tipo de PCE"
+            android:textSize="30dp" />
+    </com.google.android.material.textfield.TextInputLayout>
 
     <Button
         android:id="@+id/btnSalvarProdutoExercito"

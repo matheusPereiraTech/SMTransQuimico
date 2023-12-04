@@ -9,7 +9,7 @@ class Constants {
         const val ENVIAR_ID = "ENVIAR_ID"
         const val RECEBER_ID = "RECEBER_ID"
 
-        const val ABRIR_GOOGLE = "Opening Google..."
-        const val ABRIR_PESQUISA = "Searching..."
+        const val ABRIR_GOOGLE = "Abrindo google..."
+        const val ABRIR_PESQUISA = "Procurando..."
     }
 }

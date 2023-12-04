@@ -8,7 +8,6 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.smtransquimico.R
 import com.example.smtransquimico.model.Exercito
-import com.example.smtransquimico.model.Ibama
 
 class ListaProdutoExercitoAdapter : RecyclerView.Adapter<ListaProdutoExercitoAdapter.ListaProdutoExecitoViewHolder>() {
 
@@ -51,6 +50,11 @@ class ListaProdutoExercitoAdapter : RecyclerView.Adapter<ListaProdutoExercitoAda
 
     fun setarDeletaLista(callback: (Exercito) -> Unit) {
         this.deletarProduto = callback
+    }
+
+    fun setListaFiltrada(lExercito: List<Exercito>) {
+        listaExercito = lExercito as MutableList<Exercito>
+        notifyDataSetChanged()
     }
 
     override fun onBindViewHolder(holder: ListaProdutoExecitoViewHolder, position: Int) {

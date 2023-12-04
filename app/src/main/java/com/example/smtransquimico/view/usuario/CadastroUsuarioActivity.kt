@@ -58,7 +58,6 @@ class CadastroUsuarioActivity : AppCompatActivity() {
 
     private fun setErroCampoNome(): Boolean {
         if (binding.edtNomeUsuario.text.toString().isEmpty()) {
-            binding.inputNomeUsuario.error = "Campo Obrigatório"
             binding.edtNomeUsuario.addTextChangedListener(
                 EmptyTextWatcher(
                     binding.edtNomeUsuario,
@@ -72,7 +71,6 @@ class CadastroUsuarioActivity : AppCompatActivity() {
 
     private fun setErroCampoTelefone(): Boolean {
         if (binding.edtTelefoneUsuario.text.toString().isEmpty()) {
-            binding.inputTelefoneUsuario.error = "Campo Obrigatório"
             binding.edtTelefoneUsuario.addTextChangedListener(
                 EmptyTextWatcher(
                     binding.edtTelefoneUsuario,
@@ -86,7 +84,6 @@ class CadastroUsuarioActivity : AppCompatActivity() {
 
     private fun setErroCampoEmail(): Boolean {
         if (binding.edtEmailUsuario.text.toString().isEmpty()) {
-            binding.inputEmailUsuario.error = "Campo Obrigatório"
             binding.edtEmailUsuario.addTextChangedListener(
                 EmptyTextWatcher(
                     binding.edtEmailUsuario,
@@ -100,7 +97,6 @@ class CadastroUsuarioActivity : AppCompatActivity() {
 
     private fun setErroCampoSenha(): Boolean {
         if (binding.edtSenhaUsuario.text.toString().isEmpty()) {
-            binding.inputSenhaUsuario.error = "Campo Obrigatório"
             binding.edtSenhaUsuario.addTextChangedListener(
                 EmptyTextWatcher(
                     binding.edtSenhaUsuario,
@@ -116,7 +112,20 @@ class CadastroUsuarioActivity : AppCompatActivity() {
 
         binding.btnSalvarUsuario.setOnClickListener { view ->
 
-            if (setErroCampoNome() && setErroCampoTelefone() && setErroCampoEmail() && setErroCampoSenha()) {
+            if (setErroCampoNome() || setErroCampoTelefone() || setErroCampoEmail() || setErroCampoSenha()) {
+
+                if (setErroCampoNome()) {
+                    binding.inputNomeUsuario.error = "Campo Obrigatório"
+                }
+                if (setErroCampoTelefone()) {
+                    binding.inputTelefoneUsuario.error = "Campo Obrigatório"
+                }
+                if (setErroCampoEmail()) {
+                    binding.inputEmailUsuario.error = "Campo Obrigatório"
+                }
+                if (setErroCampoSenha()) {
+                    binding.inputSenhaUsuario.error = "Campo Obrigatório"
+                }
 
                 mensagemDeErro()
 

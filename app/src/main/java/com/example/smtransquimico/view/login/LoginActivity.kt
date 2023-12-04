@@ -4,7 +4,6 @@ import android.app.Activity
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
-import android.widget.Button
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
@@ -47,7 +46,7 @@ class LoginActivity : AppCompatActivity() {
         cliqueBotaoGoogle()
         cliqueBotaoEsqueciSenha()
 
-        controller = LoginController(this,binding)
+        controller = LoginController(this, binding)
 
     }
 
@@ -73,11 +72,11 @@ class LoginActivity : AppCompatActivity() {
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
             if (result.resultCode == Activity.RESULT_OK) {
                 val task = GoogleSignIn.getSignedInAccountFromIntent(result.data)
-                handleResults(task)
+                lidarResultados(task)
             }
         }
 
-    private fun handleResults(task: Task<GoogleSignInAccount>) {
+    private fun lidarResultados(task: Task<GoogleSignInAccount>) {
         if (task.isSuccessful) {
             val conta: GoogleSignInAccount? = task.result
             if (conta != null) {
@@ -122,6 +121,19 @@ class LoginActivity : AppCompatActivity() {
 
     private fun cliqueBotaoEntrar() {
         binding.btnEntrarLogin.setOnClickListener { view ->
+
+            if (controller.setErroEmailLogin() || controller.setErroSenhaLogin()) {
+
+                if (controller.setErroEmailLogin()) {
+                    binding.inputEdtEmailLogin.error = "Campo Obrigatório"
+                }
+
+                if (controller.setErroSenhaLogin()) {
+                    binding.inputEdtSenhaLogin.error = "Campo Obrigatório"
+                }
+
+                return@setOnClickListener
+            }
             controller.clicarBotaoCadastro()
         }
     }

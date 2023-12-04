@@ -2,23 +2,31 @@ package com.example.smtransquimico.view.produto
 
 import android.content.Intent
 import android.graphics.Color
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.SearchView
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.smtransquimico.R
-import com.example.smtransquimico.model.Ibama
 import com.example.smtransquimico.model.Policia
 import com.example.smtransquimico.view.adapter.ListaProdutoPoliciaAdapter
-import com.google.firebase.database.*
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
 import kotlinx.coroutines.launch
+import java.util.Locale
 
 class ListaProdutoPoliciactivity : AppCompatActivity() {
 
     private lateinit var recyclerView: RecyclerView
     private lateinit var adapter: ListaProdutoPoliciaAdapter
     private lateinit var databaseReference: DatabaseReference
+    private lateinit var barraPesquisa: SearchView
+
     var policias = mutableListOf<Policia>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -32,14 +40,50 @@ class ListaProdutoPoliciactivity : AppCompatActivity() {
         }
 
         window.statusBarColor = Color.parseColor("#083087")
-        initFindViewById()
+        iniciandoComponentes()
         setarRecyclerView()
         databaseReference = FirebaseDatabase.getInstance().getReference("produto_policia")
+        setarBarraPesquisa()
     }
 
-    private fun initFindViewById() {
+    private fun iniciandoComponentes() {
         recyclerView = findViewById(R.id.recyclerlListaPolicia)
+        barraPesquisa = findViewById(R.id.barraPesquisaProdutoPolicia)
     }
+
+    private fun setarBarraPesquisa() {
+        barraPesquisa.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                return false
+            }
+
+            override fun onQueryTextChange(newText: String?): Boolean {
+                filtroProduto(newText)
+                return true
+            }
+
+        })
+    }
+
+    private fun filtroProduto(query: String?) {
+        if (query != null) {
+            val listaFiltrada = ArrayList<Policia>()
+            for (i in policias) {
+                if (i.codigo.toLowerCase(Locale.ROOT)
+                        .contains(query) || i.produtoQuimico.toLowerCase(Locale.ROOT)
+                        .contains(query)
+                ) {
+                    listaFiltrada.add(i)
+                }
+            }
+            if (listaFiltrada.isEmpty()) {
+                Toast.makeText(this, "Produto não encontrado", Toast.LENGTH_SHORT).show()
+            } else {
+                adapter.setListaFiltrada(listaFiltrada)
+            }
+        }
+    }
+
 
     private fun setarRecyclerView() {
         recyclerView.layoutManager = LinearLayoutManager(this)
@@ -82,10 +126,6 @@ class ListaProdutoPoliciactivity : AppCompatActivity() {
         }
 
         databaseReference.addValueEventListener(valueEventListener)
-    }
 
-    fun enviarListaPoliciaDados(){
-        
     }
-
 }

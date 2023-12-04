@@ -4,7 +4,12 @@ import android.content.Intent
 import com.example.smtransquimico.databinding.ActivityMenuPrincipalBinding
 import com.example.smtransquimico.view.chat.UsuarioActivity
 import com.example.smtransquimico.view.login.LoginActivity
-import com.example.smtransquimico.view.produto.*
+import com.example.smtransquimico.view.produto.CadastraProdutoExercitoActivity
+import com.example.smtransquimico.view.produto.CadastraProdutoPoliciaActivity
+import com.example.smtransquimico.view.produto.CadastraProdutoPrincipalActivity
+import com.example.smtransquimico.view.produto.ListaPrincipalProdutoActivity
+import com.example.smtransquimico.view.produto.ListaProdutoExercitoActivity
+import com.example.smtransquimico.view.produto.ListaProdutoPoliciactivity
 import com.example.smtransquimico.view.usuario.ConsultaUsuarioActivity
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions

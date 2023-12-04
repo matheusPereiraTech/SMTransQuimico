@@ -14,6 +14,22 @@
         android:orientation="vertical"
         android:padding="16dp">
 
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="left">
+
+            <TextView
+                android:id="@+id/textoCorrelacaoProduto"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="left"
+                android:text="NC"
+                android:textSize="40sp"/>
+
+
+        </LinearLayout>
+
 
         <LinearLayout
             android:layout_width="match_parent"

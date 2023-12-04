@@ -21,15 +21,16 @@ import kotlin.random.Random
 class FirebaseService : FirebaseMessagingService() {
 
     val CHANNEL_ID = "my_notification_channel"
-    companion object{
+
+    companion object {
         var sharedPref: SharedPreferences? = null
 
-        var token:String?
-            get(){
-                return sharedPref?.getString("token","")
+        var token: String?
+            get() {
+                return sharedPref?.getString("token", "")
             }
-            set(value){
-                sharedPref?.edit()?.putString("token",value)?.apply()
+            set(value) {
+                sharedPref?.edit()?.putString("token", value)?.apply()
             }
     }
 
@@ -42,16 +43,17 @@ class FirebaseService : FirebaseMessagingService() {
         super.onMessageReceived(p0)
 
         val intent = Intent(this, UsuarioActivity::class.java)
-        val notificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+        val notificationManager =
+            getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
         val notificationId = Random.nextInt()
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             createNotificationChannel(notificationManager)
         }
 
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
-        val pendingIntent = PendingIntent.getActivity(this,0,intent,FLAG_ONE_SHOT)
-        val notification = NotificationCompat.Builder(this,CHANNEL_ID)
+        val pendingIntent = PendingIntent.getActivity(this, 0, intent, FLAG_ONE_SHOT)
+        val notification = NotificationCompat.Builder(this, CHANNEL_ID)
             .setContentTitle(p0.data["title"])
             .setContentText(p0.data["message"])
             .setSmallIcon(R.drawable.notificacao)
@@ -59,15 +61,15 @@ class FirebaseService : FirebaseMessagingService() {
             .setContentIntent(pendingIntent)
             .build()
 
-        notificationManager.notify(notificationId,notification)
+        notificationManager.notify(notificationId, notification)
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
-    private fun createNotificationChannel(notificationManager: NotificationManager){
+    private fun createNotificationChannel(notificationManager: NotificationManager) {
 
         val channelName = "ChannelFirebaseChat"
-        val channel = NotificationChannel(CHANNEL_ID,channelName,IMPORTANCE_HIGH).apply {
-            description="MY FIREBASE CHAT DESCRIPTION"
+        val channel = NotificationChannel(CHANNEL_ID, channelName, IMPORTANCE_HIGH).apply {
+            description = "MY FIREBASE CHAT DESCRIPTION"
             enableLights(true)
             lightColor = Color.WHITE
         }

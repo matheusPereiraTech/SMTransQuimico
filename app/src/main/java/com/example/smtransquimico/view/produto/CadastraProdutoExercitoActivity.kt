@@ -2,15 +2,11 @@ package com.example.smtransquimico.view.produto
 
 import android.content.Intent
 import android.graphics.Color
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import com.example.smtransquimico.R
+import androidx.appcompat.app.AppCompatActivity
 import com.example.smtransquimico.controller.CadastroProdutoExercitoController
-import com.example.smtransquimico.controller.CadastroProdutoPrincipalController
-import com.example.smtransquimico.databinding.ActivityCadastraProdutoBinding
 import com.example.smtransquimico.databinding.ActivityCadastraProdutoExercitoBinding
 import com.example.smtransquimico.model.Exercito
-import com.example.smtransquimico.model.Ibama
 import com.example.smtransquimico.view.menu.MenuPrincipalActivity
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
@@ -34,6 +30,7 @@ class CadastraProdutoExercitoActivity : AppCompatActivity() {
         initExtras()
         adicionarProduto(produtosRef)
     }
+
     private fun setandoBarraInicial() {
         supportActionBar!!.setDisplayHomeAsUpEnabled(true)
         supportActionBar!!.title = "Cadastrar Produto"
@@ -52,18 +49,53 @@ class CadastraProdutoExercitoActivity : AppCompatActivity() {
                 val chave = binding.txtNumeroOrdem.text.toString()
                 val produto = controller.salvarProduto()
 
+                if (controller.setErroCampoNumeroOrdem() || controller.setErroCampoNomenclatura() || controller.setErroCampoTipoPCE()) {
+
+                    if (controller.setErroCampoNumeroOrdem()) {
+                        binding.inputTxtNumeroOrdem.error = "Campo Obrigatório"
+                    }
+
+                    if (controller.setErroCampoNomenclatura()) {
+                        binding.inputTxtNomenclaturaProduto.error = "Campo Obrigatório"
+                    }
+
+                    if (controller.setErroCampoTipoPCE()) {
+                        binding.inputTxtTipoPCE.error = "Campo Obrigatório"
+                    }
+
+                    return@setOnClickListener
+                }
+
                 produtosRef.child(chave).setValue(produto)
                 voltarMenuPrincipal()
             } else {
                 val chaveExistente = exercito!!.numeroOrdem
                 val produtoAtualizado = controller.salvarProduto()
 
+                if (controller.setErroCampoNumeroOrdem() || controller.setErroCampoNomenclatura() || controller.setErroCampoTipoPCE()) {
+
+                    if (controller.setErroCampoNumeroOrdem()) {
+                        binding.inputTxtNumeroOrdem.error = "Campo Obrigatório"
+                    }
+
+                    if (controller.setErroCampoNomenclatura()) {
+                        binding.inputTxtNomenclaturaProduto.error = "Campo Obrigatório"
+                    }
+
+                    if (controller.setErroCampoTipoPCE()) {
+                        binding.inputTxtTipoPCE.error = "Campo Obrigatório"
+                    }
+
+                    return@setOnClickListener
+                }
+
                 produtosRef.child(chaveExistente).setValue(produtoAtualizado)
                 voltarMenuPrincipal()
             }
         }
     }
-    fun voltarMenuPrincipal() {
+
+    private fun voltarMenuPrincipal() {
         val intent = Intent(this, MenuPrincipalActivity::class.java)
         startActivity(intent)
     }

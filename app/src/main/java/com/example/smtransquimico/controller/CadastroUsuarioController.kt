@@ -1,6 +1,5 @@
 package com.example.smtransquimico.controller
 
-import android.widget.EditText
 import com.example.smtransquimico.databinding.ActivityCadastraUsuarioBinding
 
 

@@ -4,14 +4,14 @@ package com.example.smtransquimico.constants
 import CalculoChatBotMensagem
 import com.example.smtransquimico.constants.Constants.Companion.ABRIR_GOOGLE
 import com.example.smtransquimico.constants.Constants.Companion.ABRIR_PESQUISA
-import com.example.smtransquimico.model.Ibama
+import com.example.smtransquimico.model.ANTT
 import java.sql.Date
 import java.sql.Timestamp
 import java.text.SimpleDateFormat
 
 object BotResposta {
 
-    fun basicResponses(mensagem: String, ibamas: MutableList<Ibama>): String {
+    fun basicResponses(mensagem: String, antts: MutableList<ANTT>): String {
 
         val random = (0..2).random()
         val message = mensagem.toLowerCase()
@@ -19,23 +19,21 @@ object BotResposta {
         var encontrou = false
         var produto: String = ""
 
-        ibamas.forEach {
+        antts.forEach {
             if (mensagem.lowercase().contains(it.numeroONU.trim())) {
                 encontrou = true
                 produto =
-                    "Numero ONU: ${it.numeroONU}\n " +
-                            "Nome e Descrição: ${it.nomeDescricao}\n" +
-                            "Classe ou Subclasse de Risco: ${it.classeSubclasse}\n" +
-                            "Risco Subsidiario ${it.riscoSubsidiario}\n" +
-                            "Número de Risco: ${it.numeroRisco}\n" +
-                            "Grupo de Emb: ${it.grupoEmb}\n" +
+                    "Numero ONU: ${it.numeroONU}\n\n" +
+                            "Nome e Descrição: ${it.nomeDescricao}\n\n" +
+                            "Classe ou Subclasse de Risco: ${it.classeSubclasse}\n\n" +
+                            "Risco Subsidiario ${it.riscoSubsidiario}\n\n" +
+                            "Número de Risco: ${it.numeroRisco}\n\n" +
+                            "Grupo de Emb: ${it.grupoEmb}\n\n" +
                             "Provisões Especiais: ${it.provisoesEspeciais}"
             }
         }
 
         return when {
-
-
             encontrou -> {
                 produto
             }
@@ -51,7 +49,6 @@ object BotResposta {
                 }
             }
 
-            //Hello
             message.contains("oi") -> {
                 when (random) {
                     0 -> "Olá"
@@ -61,8 +58,7 @@ object BotResposta {
                 }
             }
 
-            //How are you?
-            message.contains("Como vai") -> {
+            message.contains("Como você está?") -> {
                 when (random) {
                     0 -> "Estou bem, obrigado!"
                     1 -> "Estou com fome..."
@@ -71,7 +67,6 @@ object BotResposta {
                 }
             }
 
-            //What time is it?
             message.contains("horas") && message.contains("?") -> {
                 val timeStamp = Timestamp(System.currentTimeMillis())
                 val sdf = SimpleDateFormat("dd/MM/yyyy HH:mm")
@@ -80,22 +75,19 @@ object BotResposta {
                 date.toString()
             }
 
-            //Abrir google
             message.contains("abrir") && message.contains("google") -> {
                 ABRIR_GOOGLE
             }
 
-            //Buscar na internet
             message.contains("pesquisar") -> {
                 ABRIR_PESQUISA
             }
 
-            //When the programme doesn't understand...
             else -> {
                 when (random) {
                     0 -> "Eu não entendo..."
-                    1 -> "Tente me perguntar algo diferente"
-                    2 -> "Refaça sua pergunta de outra forma"
+                    1 -> "Tente de novo..."
+                    2 -> "Diga-me de novo..."
                     else -> "erro"
                 }
             }

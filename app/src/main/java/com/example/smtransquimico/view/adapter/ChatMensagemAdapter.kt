@@ -1,12 +1,10 @@
 package com.example.smtransquimico.view.adapter
 
-import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
 import com.example.smtransquimico.R
 import com.example.smtransquimico.model.Chat
 import com.google.firebase.auth.FirebaseAuth
@@ -14,7 +12,6 @@ import com.google.firebase.auth.FirebaseUser
 import de.hdodenhof.circleimageview.CircleImageView
 
 class ChatMensagemAdapter(
-    private val context: Context,
     private val chatLista: ArrayList<Chat>
 ) : RecyclerView.Adapter<ChatMensagemAdapter.ViewHolder>() {
 
@@ -24,7 +21,7 @@ class ChatMensagemAdapter(
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val textoUsuario: TextView = view.findViewById(R.id.txtMensagemItem)
-        val imagemUsuario : CircleImageView = view.findViewById(R.id.imgChatItem)
+        val imagemUsuario: CircleImageView = view.findViewById(R.id.imgChatItem)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {

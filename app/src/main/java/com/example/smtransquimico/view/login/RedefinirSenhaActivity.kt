@@ -1,10 +1,10 @@
 package com.example.smtransquimico.view.login
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import com.example.smtransquimico.R
 import com.google.firebase.auth.FirebaseAuth
 
@@ -33,17 +33,29 @@ class RedefinirSenhaActivity : AppCompatActivity() {
             val identificador = campoIdentificador.text.toString()
 
             if (identificador.isEmpty()) {
-                Toast.makeText(this, "Por favor, insira seu identificador (ex: endereço de e-mail)", Toast.LENGTH_SHORT).show()
+                Toast.makeText(
+                    this,
+                    "Por favor, insira seu identificador (ex: endereço de e-mail)",
+                    Toast.LENGTH_SHORT
+                ).show()
                 return@setOnClickListener
             }
 
             auth.sendPasswordResetEmail(identificador)
                 .addOnCompleteListener { task ->
                     if (task.isSuccessful) {
-                        Toast.makeText(this, "Solicitação de redefinição de senha enviada para $identificador", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(
+                            this,
+                            "Solicitação de redefinição de senha enviada para $identificador",
+                            Toast.LENGTH_SHORT
+                        ).show()
                         finish()
                     } else {
-                        Toast.makeText(this, "Falha na solicitação de redefinição de senha: ${task.exception?.message}", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(
+                            this,
+                            "Falha na solicitação de redefinição de senha: ${task.exception?.message}",
+                            Toast.LENGTH_SHORT
+                        ).show()
                     }
                 }
         }

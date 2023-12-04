@@ -14,17 +14,25 @@ import com.example.smtransquimico.constants.Constants
 import com.example.smtransquimico.constants.Constants.Companion.ABRIR_GOOGLE
 import com.example.smtransquimico.constants.Constants.Companion.ABRIR_PESQUISA
 import com.example.smtransquimico.constants.Constants.Companion.RECEBER_ID
-import com.example.smtransquimico.constants.TempoExecucaoChatBotMensagem
-import com.example.smtransquimico.model.Ibama
+import com.example.smtransquimico.constants.HoraChatBotMensagem
+import com.example.smtransquimico.model.ANTT
 import com.example.smtransquimico.model.MensagemChatBot
 import com.example.smtransquimico.view.adapter.MensagemChatBotAdapter
-import com.google.firebase.database.*
-import kotlinx.coroutines.*
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class ChatBotActivity : AppCompatActivity() {
 
     private lateinit var adapter: MensagemChatBotAdapter
-    private lateinit var databaseReferenceIbama: DatabaseReference
+    private lateinit var databaseReferenceANTT: DatabaseReference
     var mensagemLista = mutableListOf<MensagemChatBot>()
 
     private lateinit var botaoEnviar: Button
@@ -32,7 +40,7 @@ class ChatBotActivity : AppCompatActivity() {
     private lateinit var recyclerViewChat: RecyclerView
     private lateinit var resposta: String
 
-    var ibamas = mutableListOf<Ibama>()
+    var antts = mutableListOf<ANTT>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -40,7 +48,7 @@ class ChatBotActivity : AppCompatActivity() {
 
         iniciandoComponentes()
 
-        databaseReferenceIbama = FirebaseDatabase.getInstance().getReference("produtos")
+        databaseReferenceANTT = FirebaseDatabase.getInstance().getReference("produtos")
 
         recyclerView()
 
@@ -66,7 +74,7 @@ class ChatBotActivity : AppCompatActivity() {
 
     private fun enviarMensagem() {
         val message = campoMensagemChatBot.text.toString()
-        val timeStamp = TempoExecucaoChatBotMensagem.hora()
+        val timeStamp = HoraChatBotMensagem.mostrarHora()
 
         if (message.isNotEmpty()) {
 
@@ -81,13 +89,13 @@ class ChatBotActivity : AppCompatActivity() {
     }
 
     private fun botResposta(mensagem: String) {
-        val timeStamp = TempoExecucaoChatBotMensagem.hora()
+        val timeStamp = HoraChatBotMensagem.mostrarHora()
 
         GlobalScope.launch {
             delay(1000)
 
             withContext(Dispatchers.Main) {
-                resposta = BotResposta.basicResponses(mensagem, ibamas)
+                resposta = BotResposta.basicResponses(mensagem, antts)
 
 
                 mensagemLista.add(MensagemChatBot(resposta, Constants.RECEBER_ID, timeStamp))
@@ -102,6 +110,7 @@ class ChatBotActivity : AppCompatActivity() {
                         site.data = Uri.parse("https://www.google.com/")
                         startActivity(site)
                     }
+
                     ABRIR_PESQUISA -> {
                         val site = Intent(Intent.ACTION_VIEW)
                         val searchTerm: String? = mensagem.substringAfterLast("search")
@@ -135,14 +144,14 @@ class ChatBotActivity : AppCompatActivity() {
         recyclerViewChat = findViewById(R.id.recyclerViewChatBot)
     }
 
-    fun setDadosFirebase() {
+    private fun setDadosFirebase() {
         val valueEventListener = object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
                 for (childSnapshot in dataSnapshot.children) {
 
-                    val ibama = childSnapshot.getValue(Ibama::class.java)
+                    val antt = childSnapshot.getValue(ANTT::class.java)
 
-                    ibama?.let { ibamas.add(it) }
+                    antt?.let { antts.add(it) }
 
 
                 }
@@ -158,7 +167,7 @@ class ChatBotActivity : AppCompatActivity() {
             }
         }
 
-        databaseReferenceIbama.addValueEventListener(valueEventListener)
+        databaseReferenceANTT.addValueEventListener(valueEventListener)
     }
 
     override fun onResume() {
@@ -171,7 +180,7 @@ class ChatBotActivity : AppCompatActivity() {
         GlobalScope.launch {
             delay(1000)
             withContext(Dispatchers.Main) {
-                val timeStamp = TempoExecucaoChatBotMensagem.hora()
+                val timeStamp = HoraChatBotMensagem.mostrarHora()
                 mensagemLista.add(MensagemChatBot(mensagem, RECEBER_ID, timeStamp))
                 adapter.inserirMensagem(MensagemChatBot(mensagem, RECEBER_ID, timeStamp))
 
@@ -182,12 +191,12 @@ class ChatBotActivity : AppCompatActivity() {
 
     private fun mandaMensagemProduto() {
 
-       var mensagem = "Por Favor, forneça o número de ONU do produto específico !"
+        val mensagem = "Por Favor, forneça o número de ONU do produto específico !"
 
         GlobalScope.launch {
             delay(1000)
             withContext(Dispatchers.Main) {
-                val timeStamp = TempoExecucaoChatBotMensagem.hora()
+                val timeStamp = HoraChatBotMensagem.mostrarHora()
                 mensagemLista.add(MensagemChatBot(mensagem, RECEBER_ID, timeStamp))
                 adapter.inserirMensagem(MensagemChatBot(mensagem, RECEBER_ID, timeStamp))
 

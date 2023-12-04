@@ -7,6 +7,13 @@
     android:orientation="vertical"
     tools:context=".view.produto.ListaProdutoExercitoActivity">
 
+    <androidx.appcompat.widget.SearchView
+        android:id="@+id/barraPesquisaProdutoExercito"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        >
+    </androidx.appcompat.widget.SearchView>
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerlListaExercito"
         android:layout_width="match_parent"

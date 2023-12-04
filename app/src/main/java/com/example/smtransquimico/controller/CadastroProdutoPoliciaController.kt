@@ -1,7 +1,7 @@
 package com.example.smtransquimico.controller
 
+import com.example.smtransquimico.EmptyTextWatcher
 import com.example.smtransquimico.databinding.ActivityCadastraProdutoPoliciaBinding
-import com.example.smtransquimico.model.Ibama
 import com.example.smtransquimico.model.Policia
 import java.io.Serializable
 
@@ -22,10 +22,37 @@ class CadastroProdutoPoliciaController(
         }
     }
 
+    fun setErroCodigoQuimico(): Boolean {
+        if (binding.edtCodigoQuimico.text.toString().isEmpty()) {
+            binding.edtCodigoQuimico.addTextChangedListener(
+                EmptyTextWatcher(
+                    binding.edtCodigoQuimico,
+                    binding.inputEdtCodigoQuimico
+                )
+            )
+            return true
+        }
+        return false
+    }
+
+    fun setErroProdutoQuimico(): Boolean {
+        if (binding.edtProdutoQuimico.text.toString().isEmpty()) {
+            binding.edtProdutoQuimico.addTextChangedListener(
+                EmptyTextWatcher(
+                    binding.edtProdutoQuimico,
+                    binding.inputEdtProdutoQuimic
+                )
+            )
+            return true
+        }
+        return false
+    }
+
     fun salvarProduto(): Policia {
         return Policia(
             binding.edtCodigoQuimico.text.toString(),
             binding.edtProdutoQuimico.text.toString()
         )
     }
+
 }

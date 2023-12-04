@@ -6,7 +6,7 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.example.smtransquimico.controller.CadastroProdutoPrincipalController
 import com.example.smtransquimico.databinding.ActivityCadastraProdutoBinding
-import com.example.smtransquimico.model.Ibama
+import com.example.smtransquimico.model.ANTT
 import com.example.smtransquimico.view.menu.MenuPrincipalActivity
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
@@ -15,7 +15,7 @@ import com.google.firebase.database.FirebaseDatabase
 class CadastraProdutoPrincipalActivity : AppCompatActivity() {
 
     lateinit var controller: CadastroProdutoPrincipalController
-    private var ibama: Ibama? = null
+    private var antt: ANTT? = null
     private lateinit var binding: ActivityCadastraProdutoBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -28,7 +28,7 @@ class CadastraProdutoPrincipalActivity : AppCompatActivity() {
 
         val database = FirebaseDatabase.getInstance()
         val produtosRef = database.getReference("produtos")
-        controller = CadastroProdutoPrincipalController(ibama, binding)
+        controller = CadastroProdutoPrincipalController(antt, binding)
         initExtras()
         adicionarProduto(produtosRef)
     }
@@ -47,15 +47,42 @@ class CadastraProdutoPrincipalActivity : AppCompatActivity() {
     private fun adicionarProduto(produtosRef: DatabaseReference) {
         binding.btnSalvarProduto.setOnClickListener {
 
-            if (ibama == null) {
+            if (antt == null) {
                 val chave = binding.txtNumeroOnu.text.toString()
                 val produto = controller.salvarProduto()
+
+                if (controller.setErroCampoNumeroONU() || controller.setErroNomeDescricao()) {
+
+                    if (controller.setErroCampoNumeroONU()) {
+                        binding.inputTxtNumeroOnu.error = "Campo Obrigatório"
+                    }
+
+                    if (controller.setErroNomeDescricao()) {
+                        binding.inputTxtNomeDescricao.error = "Campo Obrigatório"
+                    }
+
+                    return@setOnClickListener
+                }
 
                 produtosRef.child(chave).setValue(produto)
                 voltarMenuPrincipal()
             } else {
-                val chaveExistente = ibama!!.numeroONU
+                val chaveExistente = antt!!.numeroONU
                 val produtoAtualizado = controller.salvarProduto()
+
+                if (controller.setErroCampoNumeroONU() || controller.setErroNomeDescricao()) {
+
+                    if (controller.setErroCampoNumeroONU()) {
+                        binding.inputTxtNumeroOnu.error = "Campo Obrigatório"
+                    }
+
+                    if (controller.setErroNomeDescricao()) {
+                        binding.inputTxtNomeDescricao.error = "Campo Obrigatório"
+                    }
+
+                    return@setOnClickListener
+                }
+
 
                 produtosRef.child(chaveExistente).setValue(produtoAtualizado)
                 voltarMenuPrincipal()
@@ -63,7 +90,7 @@ class CadastraProdutoPrincipalActivity : AppCompatActivity() {
         }
     }
 
-    fun voltarMenuPrincipal() {
+    private fun voltarMenuPrincipal() {
         val intent = Intent(this, MenuPrincipalActivity::class.java)
         startActivity(intent)
     }

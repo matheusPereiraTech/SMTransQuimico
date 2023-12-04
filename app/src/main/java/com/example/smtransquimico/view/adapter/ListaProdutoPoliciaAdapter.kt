@@ -9,7 +9,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.smtransquimico.R
 import com.example.smtransquimico.model.Policia
 
-class ListaProdutoPoliciaAdapter: RecyclerView.Adapter<ListaProdutoPoliciaAdapter.ListaProdutoPoliciaViewHolder>()  {
+class ListaProdutoPoliciaAdapter :
+    RecyclerView.Adapter<ListaProdutoPoliciaAdapter.ListaProdutoPoliciaViewHolder>() {
 
     private var listaPolicia = mutableListOf<Policia>()
     private var atualizarProduto: ((Policia) -> Unit)? = null
@@ -49,6 +50,11 @@ class ListaProdutoPoliciaAdapter: RecyclerView.Adapter<ListaProdutoPoliciaAdapte
 
     fun setarDeletaLista(callback: (Policia) -> Unit) {
         this.deletarProduto = callback
+    }
+
+    fun setListaFiltrada(lPolicia: List<Policia>) {
+        listaPolicia = lPolicia as MutableList<Policia>
+        notifyDataSetChanged()
     }
 
     override fun onBindViewHolder(holder: ListaProdutoPoliciaViewHolder, position: Int) {

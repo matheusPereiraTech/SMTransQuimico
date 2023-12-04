@@ -4,7 +4,6 @@ import android.Manifest
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.net.Uri
 import android.os.Bundle
 import android.widget.Button
 import android.widget.ImageView
@@ -14,17 +13,19 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
 import com.example.smtransquimico.R
 import com.example.smtransquimico.data.FirebaseService
 import com.example.smtransquimico.model.Usuario
 import com.example.smtransquimico.view.adapter.ListaUsuarioChatAdapter
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
-import com.google.firebase.database.*
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
 import com.google.firebase.iid.FirebaseInstanceId
 import com.google.firebase.messaging.FirebaseMessaging
-import java.io.File
 
 class UsuarioActivity : AppCompatActivity() {
 
@@ -62,10 +63,18 @@ class UsuarioActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
-        if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
-            getUserList()
+        if (ContextCompat.checkSelfPermission(
+                this,
+                Manifest.permission.READ_EXTERNAL_STORAGE
+            ) == PackageManager.PERMISSION_GRANTED
+        ) {
+            pegarUsuarioLista()
         } else {
-            ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE), REQUEST_STORAGE_PERMISSION)
+            ActivityCompat.requestPermissions(
+                this,
+                arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE),
+                REQUEST_STORAGE_PERMISSION
+            )
         }
     }
 
@@ -76,13 +85,14 @@ class UsuarioActivity : AppCompatActivity() {
 
     }
 
-    private fun getUserList() {
+    private fun pegarUsuarioLista() {
         val firebase: FirebaseUser = FirebaseAuth.getInstance().currentUser!!
 
         val userid = firebase.uid
         FirebaseMessaging.getInstance().subscribeToTopic("/topics/$userid")
 
-        val databaseReference: DatabaseReference = FirebaseDatabase.getInstance().getReference("Users")
+        val databaseReference: DatabaseReference =
+            FirebaseDatabase.getInstance().getReference("Users")
 
         databaseReference.addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
@@ -103,15 +113,20 @@ class UsuarioActivity : AppCompatActivity() {
         })
     }
 
-    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         when (requestCode) {
             REQUEST_STORAGE_PERMISSION -> {
                 if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     // Permissão concedida, carregue a lista de usuários
-                    getUserList()
+                    pegarUsuarioLista()
                 } else {
-                    Toast.makeText(this, "Permissão de armazenamento negada", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this, "Permissão de armazenamento negada", Toast.LENGTH_SHORT)
+                        .show()
                 }
             }
         }

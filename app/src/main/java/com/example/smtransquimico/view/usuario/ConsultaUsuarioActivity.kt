@@ -1,9 +1,9 @@
 package com.example.smtransquimico.view.usuario
 
 import android.graphics.Color
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.smtransquimico.R
@@ -11,7 +11,11 @@ import com.example.smtransquimico.model.Usuario
 import com.example.smtransquimico.view.adapter.ConsultaUsuarioAdapter
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
-import com.google.firebase.database.*
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
 
 class ConsultaUsuarioActivity : AppCompatActivity() {
 
@@ -30,7 +34,7 @@ class ConsultaUsuarioActivity : AppCompatActivity() {
         pegarListaUsuario()
     }
 
-    private fun inicializarRecyclerView (){
+    private fun inicializarRecyclerView() {
         recyclerView = findViewById(R.id.recyclerListaUsuario)
         recyclerView.layoutManager = LinearLayoutManager(this, RecyclerView.VERTICAL, false)
 
@@ -48,12 +52,13 @@ class ConsultaUsuarioActivity : AppCompatActivity() {
                 for (dataSnapShot: DataSnapshot in snapshot.children) {
                     val usuario = dataSnapShot.getValue(Usuario::class.java)
 
-                    if (!usuario!!.userId.equals(firebase.uid)) {
+                    if (usuario!!.userId != firebase.uid) {
                         listaConsultaUsuario.add(usuario)
                     }
                 }
 
-                val usuarioAdapter = ConsultaUsuarioAdapter(this@ConsultaUsuarioActivity, listaConsultaUsuario)
+                val usuarioAdapter =
+                    ConsultaUsuarioAdapter(this@ConsultaUsuarioActivity, listaConsultaUsuario)
 
                 recyclerView.adapter = usuarioAdapter
 

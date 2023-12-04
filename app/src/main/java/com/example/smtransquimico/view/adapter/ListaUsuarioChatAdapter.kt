@@ -2,7 +2,6 @@ package com.example.smtransquimico.view.adapter
 
 import android.content.Context
 import android.content.Intent
-import android.graphics.Bitmap
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -41,7 +40,8 @@ class ListaUsuarioChatAdapter(
         val usuario = listaUsuario[position]
         holder.textoUsuario.text = usuario.userName
 
-        Glide.with(context).load(usuario.profileImage).placeholder(R.drawable.imagem_perfil).into(holder.imagemUsuario)
+        Glide.with(context).load(usuario.profileImage).placeholder(R.drawable.imagem_perfil)
+            .into(holder.imagemUsuario)
 
         holder.layoutUsuario.setOnClickListener {
             val intent = Intent(context, ChatActivity::class.java)

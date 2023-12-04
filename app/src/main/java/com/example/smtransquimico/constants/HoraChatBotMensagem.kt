@@ -4,9 +4,9 @@ import java.sql.Date
 import java.sql.Timestamp
 import java.text.SimpleDateFormat
 
-object TempoExecucaoChatBotMensagem {
+object HoraChatBotMensagem {
 
-    fun hora(): String {
+    fun mostrarHora(): String {
         val hora = Timestamp(System.currentTimeMillis())
         val sdf = SimpleDateFormat("HH:mm")
         val tm = sdf.format(Date(hora.time))

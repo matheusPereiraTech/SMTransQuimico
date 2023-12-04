@@ -1,155 +1,181 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/fundo_app"
-    android:orientation="vertical"
-    android:padding="20dp"
     tools:context=".view.produto.CadastraProdutoPrincipalActivity">
 
-    <com.google.android.material.textfield.TextInputLayout
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:hint="Número ONU">
+        android:fillViewport="true"
+        android:id="@+id/container_rolagem"
+        >
 
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/txtNumeroOnu"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@drawable/borda_texto"
-            android:inputType="text"
-            android:lines="1"
-            android:textColorHint="@color/black"
-            android:textSize="20sp" />
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:padding="20dp">
 
-    </com.google.android.material.textfield.TextInputLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="20dp">
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:hint="Nome e descrição">
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/inputTxtNumeroOnu"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:hint="Número ONU">
 
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/txtNomeDescricao"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@drawable/borda_texto"
-            android:inputType="text"
-            android:lines="1"
-            android:textColorHint="@color/black"
-            android:textSize="20sp" />
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/txtNumeroOnu"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="text"
+                        android:lines="1"
+                        android:textColorHint="@color/black"
+                        android:textSize="20sp" />
 
-    </com.google.android.material.textfield.TextInputLayout>
+                </com.google.android.material.textfield.TextInputLayout>
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:hint="Classe ou Subclasse de Risco">
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/inputTxtNomeDescricao"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:hint="Nome e descrição">
 
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/txtClasseSubclasse"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@drawable/borda_texto"
-            android:inputType="text"
-            android:lines="1"
-            android:textColorHint="@color/black"
-            android:textSize="20sp" />
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/txtNomeDescricao"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="text"
+                        android:lines="1"
+                        android:textColorHint="@color/black"
+                        android:textSize="20sp" />
 
-    </com.google.android.material.textfield.TextInputLayout>
+                </com.google.android.material.textfield.TextInputLayout>
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:hint="Risco Subsi-diário">
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:hint="Classe ou Subclasse de Risco">
 
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/txtRiscoSubsidiario"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@drawable/borda_texto"
-            android:inputType="text"
-            android:lines="1"
-            android:textColorHint="@color/black"
-            android:textSize="20sp" />
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/txtClasseSubclasse"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="text"
+                        android:lines="1"
+                        android:textColorHint="@color/black"
+                        android:textSize="20sp" />
 
-    </com.google.android.material.textfield.TextInputLayout>
+                </com.google.android.material.textfield.TextInputLayout>
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:hint="Número de Risco">
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:hint="Risco Subsi-diário">
 
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/txtNumeroRisco"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@drawable/borda_texto"
-            android:inputType="text"
-            android:lines="1"
-            android:textColorHint="@color/black"
-            android:textSize="20sp" />
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/txtRiscoSubsidiario"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="text"
+                        android:lines="1"
+                        android:textColorHint="@color/black"
+                        android:textSize="20sp" />
 
-    </com.google.android.material.textfield.TextInputLayout>
+                </com.google.android.material.textfield.TextInputLayout>
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:hint="Grupo de Emb">
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:hint="Número de Risco">
 
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/txtGrupoEmb"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@drawable/borda_texto"
-            android:inputType="text"
-            android:lines="1"
-            android:textColorHint="@color/black"
-            android:textSize="20sp" />
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/txtNumeroRisco"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="text"
+                        android:lines="1"
+                        android:textColorHint="@color/black"
+                        android:textSize="20sp" />
 
-    </com.google.android.material.textfield.TextInputLayout>
+                </com.google.android.material.textfield.TextInputLayout>
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:hint="Provisões Especiais">
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:hint="Grupo de Emb">
 
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/txt_provisoes_especiais"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@drawable/borda_texto"
-            android:inputType="text"
-            android:lines="1"
-            android:textColorHint="@color/black"
-            android:textSize="20sp" />
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/txtGrupoEmb"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="text"
+                        android:lines="1"
+                        android:textColorHint="@color/black"
+                        android:textSize="20sp" />
 
-    </com.google.android.material.textfield.TextInputLayout>
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:hint="Provisões Especiais">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/txt_provisoes_especiais"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="text"
+                        android:lines="1"
+                        android:textColorHint="@color/black"
+                        android:textSize="20sp" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </ScrollView>
+
 
     <LinearLayout
+        android:id="@+id/container_botao"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="20dp"
+        android:padding="10dp"
+        android:layout_below="@id/container_rolagem"
+        android:gravity="bottom|center_horizontal"
+        android:orientation="vertical">
 
         <Button
             android:id="@+id/btnSalvarProduto"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom"
+            android:layout_height="50dp"
             android:background="@drawable/borda_botao"
             android:text="Salvar"
             android:textColor="@color/white"
             android:textSize="20sp">
 
         </Button>
+
     </LinearLayout>
 
-</LinearLayout>
+</RelativeLayout>

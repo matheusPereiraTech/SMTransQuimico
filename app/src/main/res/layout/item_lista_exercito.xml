@@ -88,7 +88,7 @@
             android:id="@+id/txtlistaPCETitulo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Nomenclatura:"
+            android:text="Tipo de PCE:"
             android:textSize="15dp"
             />
 

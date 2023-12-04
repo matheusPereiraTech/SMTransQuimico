@@ -2,14 +2,10 @@ package com.example.smtransquimico.view.produto
 
 import android.content.Intent
 import android.graphics.Color
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import com.example.smtransquimico.R
+import androidx.appcompat.app.AppCompatActivity
 import com.example.smtransquimico.controller.CadastroProdutoPoliciaController
-import com.example.smtransquimico.controller.CadastroProdutoPrincipalController
-import com.example.smtransquimico.databinding.ActivityCadastraProdutoBinding
 import com.example.smtransquimico.databinding.ActivityCadastraProdutoPoliciaBinding
-import com.example.smtransquimico.model.Ibama
 import com.example.smtransquimico.model.Policia
 import com.example.smtransquimico.view.menu.MenuPrincipalActivity
 import com.google.firebase.database.DatabaseReference
@@ -54,11 +50,38 @@ class CadastraProdutoPoliciaActivity : AppCompatActivity() {
                 val chave = binding.edtCodigoQuimico.text.toString()
                 val produto = controller.salvarProduto()
 
+
+                if (controller.setErroCodigoQuimico() || controller.setErroProdutoQuimico()) {
+
+                    if (controller.setErroCodigoQuimico()) {
+                        binding.inputEdtCodigoQuimico.error = "Campo Obrigatório"
+                    }
+
+                    if (controller.setErroProdutoQuimico()) {
+                        binding.inputEdtProdutoQuimic.error = "Campo Obrigatório"
+                    }
+
+                    return@setOnClickListener
+                }
+
                 produtosRef.child(chave).setValue(produto)
                 voltarMenuPrincipal()
             } else {
                 val chaveExistente = policia!!.codigo
                 val produtoAtualizado = controller.salvarProduto()
+
+                if (controller.setErroCodigoQuimico() || controller.setErroProdutoQuimico()) {
+
+                    if (controller.setErroCodigoQuimico()) {
+                        binding.inputEdtCodigoQuimico.error = "Campo Obrigatório"
+                    }
+
+                    if (controller.setErroProdutoQuimico()) {
+                        binding.inputEdtProdutoQuimic.error = "Campo Obrigatório"
+                    }
+
+                    return@setOnClickListener
+                }
 
                 produtosRef.child(chaveExistente).setValue(produtoAtualizado)
                 voltarMenuPrincipal()

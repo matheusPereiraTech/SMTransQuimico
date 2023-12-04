@@ -1,12 +1,8 @@
 package com.example.smtransquimico.view.chat
 
-import android.content.ContentValues.TAG
 import android.os.Bundle
 import android.text.Editable
 import android.util.Log
-import android.widget.ImageButton
-import android.widget.ImageView
-import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -23,8 +19,11 @@ import com.example.smtransquimico.model.Usuario
 import com.example.smtransquimico.view.adapter.ChatMensagemAdapter
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
-import com.google.firebase.database.*
-import com.google.firebase.messaging.FirebaseMessaging
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
 import com.google.gson.Gson
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -108,7 +107,7 @@ class ChatActivity : AppCompatActivity() {
     }
 
     private fun enviarMensagem(enviarId: String, receberId: String, mensagem: String) {
-        controller.enviarMensagem(enviarId,receberId,mensagem)
+        controller.enviarMensagem(enviarId, receberId, mensagem)
     }
 
     private fun lerMensagem(enviarId: String, receberId: String) {
@@ -140,7 +139,7 @@ class ChatActivity : AppCompatActivity() {
     private fun setarAdaptador() {
         binding.listaChat.layoutManager =
             LinearLayoutManager(this@ChatActivity, RecyclerView.VERTICAL, false)
-        val chatMensagemAdapter = ChatMensagemAdapter(this@ChatActivity, listaChat)
+        val chatMensagemAdapter = ChatMensagemAdapter(listaChat)
         binding.listaChat.adapter = chatMensagemAdapter
     }
 

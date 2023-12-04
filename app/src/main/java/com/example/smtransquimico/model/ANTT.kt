@@ -4,7 +4,7 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 
 @Entity(tableName = "Produto")
-data class Ibama(
+data class ANTT(
     val numeroONU: String = "",
     val nomeDescricao: String = "",
     val classeSubclasse: String = "",

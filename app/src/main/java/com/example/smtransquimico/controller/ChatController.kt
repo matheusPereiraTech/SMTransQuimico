@@ -6,7 +6,6 @@ import com.google.firebase.database.FirebaseDatabase
 
 class ChatController(var binding: ActivityChatBinding) {
 
-
     fun setImagemPerfil(imageResource: Int) {
         binding.imgChat.setImageResource(imageResource)
     }

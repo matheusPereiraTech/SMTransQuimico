@@ -20,27 +20,40 @@
         android:layout_marginTop="20dp"
         android:text="Cadastro Produto Policia" />
 
-
-    <EditText
-        android:id="@+id/edtCodigoQuimico"
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/inputEdtCodigoQuimico"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/textoProdutoPolicia"
-        android:background="@drawable/borda_texto"
-        android:layout_marginTop="20dp"
-        android:textSize="40dp"
-        android:hint="Código" />
+        >
 
-    <EditText
-        android:id="@+id/edtProdutoQuimico"
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/edtCodigoQuimico"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:maxLines="1"
+            android:layout_marginTop="20dp"
+            android:textSize="30dp"
+            android:hint="Código" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/inputEdtProdutoQuimic"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/edtCodigoQuimico"
-        android:background="@drawable/borda_texto"
-        android:layout_marginTop="20dp"
-        android:textSize="40dp"
+        android:layout_below="@id/inputEdtCodigoQuimico"
+        >
 
-        android:hint="Produto Químico" />
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/edtProdutoQuimico"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:maxLines="1"
+            android:textSize="30dp"
+            android:hint="Produto Químico" />
+    </com.google.android.material.textfield.TextInputLayout>
+
 
     <Button
         android:id="@+id/btnSalvarProdutoPolicia"

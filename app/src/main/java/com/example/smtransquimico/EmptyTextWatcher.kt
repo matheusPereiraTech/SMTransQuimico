@@ -5,10 +5,18 @@ import android.text.TextWatcher
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 
-class EmptyTextWatcher(private val editText: TextInputEditText, private val textInputLayout: TextInputLayout) :
+class EmptyTextWatcher(
+    private val editText: TextInputEditText,
+    private val textInputLayout: TextInputLayout
+) :
     TextWatcher {
 
-    override fun beforeTextChanged(charSequence: CharSequence?, start: Int, count: Int, after: Int) {
+    override fun beforeTextChanged(
+        charSequence: CharSequence?,
+        start: Int,
+        count: Int,
+        after: Int
+    ) {
         // Não é necessário implementar
     }
 
