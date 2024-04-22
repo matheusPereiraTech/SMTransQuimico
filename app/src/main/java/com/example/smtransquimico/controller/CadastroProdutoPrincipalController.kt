@@ -6,10 +6,11 @@ import com.example.smtransquimico.model.ANTT
 import java.io.Serializable
 
 class CadastroProdutoPrincipalController(
-    var antt: ANTT? = null,
+    private var antt: ANTT? = null,
     var binding: ActivityCadastraProdutoBinding
 ) {
     fun setarDadosCampoProduto(produtoSerializable: Serializable?) {
+
         if (produtoSerializable != null && produtoSerializable is ANTT) {
             antt = produtoSerializable as ANTT
             binding.btnSalvarProduto.text = "Atualizar Produto"

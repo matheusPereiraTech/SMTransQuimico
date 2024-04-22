@@ -8,18 +8,6 @@
     android:orientation="vertical"
     tools:context=".view.menu.MenuPrincipalActivity">
 
-    <Button
-        android:id="@+id/btnDeslogar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="18dp"
-        android:padding="15dp"
-        android:layout_gravity="right"
-        android:textStyle="bold"
-        android:textAllCaps="false"
-        android:layout_marginRight="10dp"
-        android:text="Deslogar" />
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"

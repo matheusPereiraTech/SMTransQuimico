@@ -9,10 +9,10 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.smtransquimico.R
 import com.example.smtransquimico.model.Usuario
 
-class ConsultaUsuarioAdapter(
+class QueryUserAdapter(
     private val context: Context,
     private val listaConsultaUsuario: ArrayList<Usuario>
-) : RecyclerView.Adapter<ConsultaUsuarioAdapter.ViewHolder>() {
+) : RecyclerView.Adapter<QueryUserAdapter.ViewHolder>() {
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val txtNomeConsultaUsuario: TextView = view.findViewById(R.id.txtConsultaNomeUsuario)
@@ -23,18 +23,18 @@ class ConsultaUsuarioAdapter(
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
-    ): ConsultaUsuarioAdapter.ViewHolder {
+    ): QueryUserAdapter.ViewHolder {
         val view =
             LayoutInflater.from(parent.context)
                 .inflate(R.layout.item_consulta_usuario, parent, false)
-        return ConsultaUsuarioAdapter.ViewHolder(view)
+        return QueryUserAdapter.ViewHolder(view)
     }
 
     override fun getItemCount(): Int {
         return listaConsultaUsuario.size
     }
 
-    override fun onBindViewHolder(holder: ConsultaUsuarioAdapter.ViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: QueryUserAdapter.ViewHolder, position: Int) {
         val usuario = listaConsultaUsuario[position]
         holder.txtNomeConsultaUsuario.text = usuario.userName
         holder.txtTelefoneConsultausuario.text = usuario.phone

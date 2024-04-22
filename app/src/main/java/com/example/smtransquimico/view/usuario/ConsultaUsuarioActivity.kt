@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.smtransquimico.R
 import com.example.smtransquimico.model.Usuario
-import com.example.smtransquimico.view.adapter.ConsultaUsuarioAdapter
+import com.example.smtransquimico.view.adapter.QueryUserAdapter
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.database.DataSnapshot
@@ -58,7 +58,7 @@ class ConsultaUsuarioActivity : AppCompatActivity() {
                 }
 
                 val usuarioAdapter =
-                    ConsultaUsuarioAdapter(this@ConsultaUsuarioActivity, listaConsultaUsuario)
+                    QueryUserAdapter(this@ConsultaUsuarioActivity, listaConsultaUsuario)
 
                 recyclerView.adapter = usuarioAdapter
 

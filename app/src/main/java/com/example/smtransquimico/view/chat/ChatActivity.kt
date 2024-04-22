@@ -1,5 +1,6 @@
 package com.example.smtransquimico.view.chat
 
+import android.net.Uri
 import android.os.Bundle
 import android.text.Editable
 import android.util.Log
@@ -7,8 +8,6 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
-import com.example.smtransquimico.R
 import com.example.smtransquimico.RetrofitInstance
 import com.example.smtransquimico.controller.ChatController
 import com.example.smtransquimico.databinding.ActivityChatBinding
@@ -36,7 +35,7 @@ class ChatActivity : AppCompatActivity() {
     private var listaChat = ArrayList<Chat>()
     private lateinit var binding: ActivityChatBinding
     private lateinit var controller: ChatController
-    var topic = ""
+    private var topic = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -61,22 +60,17 @@ class ChatActivity : AppCompatActivity() {
         reference = FirebaseDatabase.getInstance().getReference("Users").child(userId!!)
 
         setarImagemBancoFirebase()
-        lerMensagem(firebaseUser!!.uid, userId)
+        popularChatComDadosFirebase(firebaseUser!!.uid, userId)
 
         clicarBotaoEnviarMensagem(userId, userName)
     }
 
-
     private fun setarImagemBancoFirebase() {
         reference!!.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
-                val usuario = snapshot.getValue(Usuario::class.java)
-                binding.txtNomeChat.text = usuario!!.userName
-                if (usuario.profileImage == "") {
-                    controller.setImagemPerfil(R.drawable.imagem_perfil)
-                } else {
-                    Glide.with(this@ChatActivity).load(usuario.profileImage).into(binding.imgChat)
-                }
+                val data = snapshot.getValue(Usuario::class.java)
+                binding.txtNomeChat.text = data!!.userName
+                binding.imgChat.setImageURI(Uri.parse(data.profileImage))
             }
 
             override fun onCancelled(error: DatabaseError) {
@@ -84,25 +78,30 @@ class ChatActivity : AppCompatActivity() {
             }
         })
     }
-
     private fun clicarBotaoEnviarMensagem(id: String, nome: String?) {
+        val campoVazio = Editable.Factory.getInstance().newEditable("")
+        val mensagem: String = binding.edtMensagem.text.toString()
+
         binding.btnEnviarMensagem.setOnClickListener {
-            val mensagem: String = binding.edtMensagem.text.toString()
 
             if (mensagem.isEmpty()) {
                 Toast.makeText(applicationContext, "Mensagem Vazia", Toast.LENGTH_SHORT).show()
-                binding.edtMensagem.text = Editable.Factory.getInstance().newEditable("")
+                binding.edtMensagem.text = campoVazio
             } else {
                 enviarMensagem(firebaseUser!!.uid, id, mensagem)
-                binding.edtMensagem.text = Editable.Factory.getInstance().newEditable("")
+                binding.edtMensagem.text = campoVazio
                 topic = "/topics/$id"
-                PushNotification(
-                    NotificationData(nome!!, mensagem),
-                    topic
-                ).also {
-                    sendNotification(it)
-                }
+                enviarNotificacao(nome, mensagem)
             }
+        }
+    }
+
+    private fun enviarNotificacao(nome: String?, mensagem: String) {
+        PushNotification(
+            NotificationData(nome!!, mensagem),
+            topic
+        ).also {
+            sendNotification(it)
         }
     }
 
@@ -110,8 +109,7 @@ class ChatActivity : AppCompatActivity() {
         controller.enviarMensagem(enviarId, receberId, mensagem)
     }
 
-    private fun lerMensagem(enviarId: String, receberId: String) {
-
+    private fun popularChatComDadosFirebase(enviarId: String, receberId: String) {
         val databaseReference: DatabaseReference =
             FirebaseDatabase.getInstance().getReference("Chat")
 
@@ -121,13 +119,15 @@ class ChatActivity : AppCompatActivity() {
 
                 for (dataSnapShot: DataSnapshot in snapshot.children) {
 
-                    val chat = dataSnapShot.getValue(Chat::class.java)
-                    if (chat!!.senderId == enviarId && chat.receiverId == receberId || chat.senderId == receberId && chat.receiverId == enviarId
-                    ) {
-                        listaChat.add(chat)
+                    val data = dataSnapShot.getValue(Chat::class.java)
+
+
+                    if (data!!.senderId == enviarId && data.receiverId == receberId) {
+
+                        if (data.senderId == receberId && data.receiverId == enviarId)
+                            setarAdaptador()
                     }
                 }
-                setarAdaptador()
             }
 
             override fun onCancelled(error: DatabaseError) {
@@ -139,8 +139,7 @@ class ChatActivity : AppCompatActivity() {
     private fun setarAdaptador() {
         binding.listaChat.layoutManager =
             LinearLayoutManager(this@ChatActivity, RecyclerView.VERTICAL, false)
-        val chatMensagemAdapter = ChatMensagemAdapter(listaChat)
-        binding.listaChat.adapter = chatMensagemAdapter
+        binding.listaChat.adapter = ChatMensagemAdapter(listaChat)
     }
 
     private fun sendNotification(notificacao: PushNotification) =

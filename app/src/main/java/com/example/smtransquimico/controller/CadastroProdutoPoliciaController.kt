@@ -6,7 +6,7 @@ import com.example.smtransquimico.model.Policia
 import java.io.Serializable
 
 class CadastroProdutoPoliciaController(
-    var policia: Policia? = null,
+    private var policia: Policia? = null,
     var binding: ActivityCadastraProdutoPoliciaBinding
 ) {
     fun setarDadosCampoProduto(produtoSerializable: Serializable?) {

@@ -3,6 +3,7 @@ package com.example.smtransquimico.view.produto
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import com.example.smtransquimico.controller.CadastroProdutoPrincipalController
 import com.example.smtransquimico.databinding.ActivityCadastraProdutoBinding
@@ -10,13 +11,15 @@ import com.example.smtransquimico.model.ANTT
 import com.example.smtransquimico.view.menu.MenuPrincipalActivity
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
+import com.itextpdf.text.pdf.PdfReader
 
 
 class CadastraProdutoPrincipalActivity : AppCompatActivity() {
 
-    lateinit var controller: CadastroProdutoPrincipalController
+    private lateinit var controller: CadastroProdutoPrincipalController
     private var antt: ANTT? = null
     private lateinit var binding: ActivityCadastraProdutoBinding
+    private val database  = FirebaseDatabase.getInstance()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -26,8 +29,8 @@ class CadastraProdutoPrincipalActivity : AppCompatActivity() {
 
         setandoBarraInicial()
 
-        val database = FirebaseDatabase.getInstance()
         val produtosRef = database.getReference("produtos")
+
         controller = CadastroProdutoPrincipalController(antt, binding)
         initExtras()
         adicionarProduto(produtosRef)

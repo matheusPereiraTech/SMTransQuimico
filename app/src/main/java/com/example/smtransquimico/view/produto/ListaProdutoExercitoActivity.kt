@@ -122,4 +122,5 @@ class ListaProdutoExercitoActivity : AppCompatActivity() {
 
         databaseReference.addValueEventListener(valueEventListener)
     }
+
 }

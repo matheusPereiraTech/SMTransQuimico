@@ -102,17 +102,17 @@ class PerfilUsuarioActivity : AppCompatActivity() {
 
         databaseReference.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
-                val usuario = snapshot.getValue(Usuario::class.java)
+                val data = snapshot.getValue(Usuario::class.java)
 
-                if (usuario != null) {
-                    edtNomePerfil.setText(usuario.userName)
+                if (data != null) {
+                    edtNomePerfil.setText(data.userName)
 
-                    if (usuario.profileImage == "") {
+                    if (data.profileImage == "") {
                         imgPerfil.setImageResource(R.drawable.imagem_perfil)
                     } else {
                         if (!isDestroyed && !isFinishing) {
                             Glide.with(this@PerfilUsuarioActivity)
-                                .load(usuario.profileImage)
+                                .load(data.profileImage)
                                 .placeholder(R.drawable.imagem_perfil)
                                 .into(imgPerfil)
                         }

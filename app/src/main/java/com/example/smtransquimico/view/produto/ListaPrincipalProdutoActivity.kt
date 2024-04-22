@@ -3,6 +3,7 @@ package com.example.smtransquimico.view.produto
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
+import android.view.MenuItem
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView

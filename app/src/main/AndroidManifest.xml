@@ -6,6 +6,7 @@
     <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
     <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
@@ -15,11 +16,14 @@
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@mipmap/ic_transquimico"
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/Theme.SMTransQuimico"
         tools:targetApi="31">
+        <activity
+            android:name=".DetailsActivity"
+            android:exported="false" />
         <activity
             android:name=".view.chat.ChatBotActivity"
             android:exported="false" />
@@ -46,7 +50,7 @@
             android:name=".view.chat.PerfilUsuarioActivity"
             android:exported="false" />
         <activity
-            android:name=".view.chat.UsuarioActivity"
+            android:name=".view.chat.ActivityUsuario"
             android:exported="false" />
         <activity
             android:name=".view.produto.CadastraProdutoPrincipalActivity"

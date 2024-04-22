@@ -1,16 +1,20 @@
 package com.example.smtransquimico.view.usuario
 
+import android.R
 import android.content.ContentValues.TAG
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
+import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import com.example.smtransquimico.EmptyTextWatcher
 import com.example.smtransquimico.TelefoneMaskWatcher
 import com.example.smtransquimico.controller.CadastroUsuarioController
 import com.example.smtransquimico.databinding.ActivityCadastraUsuarioBinding
 import com.example.smtransquimico.view.login.LoginActivity
+import com.google.android.gms.auth.api.signin.GoogleSignIn
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
@@ -31,13 +35,17 @@ class CadastroUsuarioActivity : AppCompatActivity() {
         val view = binding.root
         setContentView(view)
 
+        supportActionBar?.apply {
+            setDisplayHomeAsUpEnabled(true)
+            title = "Cadastro Usuário"
+        }
+        window.statusBarColor = Color.parseColor("#083087")
+
         controller = CadastroUsuarioController(binding)
 
         val telefoneMaskWatcher = TelefoneMaskWatcher(binding.edtTelefoneUsuario)
         binding.edtTelefoneUsuario.addTextChangedListener(telefoneMaskWatcher)
 
-        supportActionBar?.hide()
-        window.statusBarColor = Color.parseColor("#083087")
         auth = FirebaseAuth.getInstance()
         cliqueSalvarUsuario()
 
@@ -161,6 +169,17 @@ class CadastroUsuarioActivity : AppCompatActivity() {
                     }
             }
         }
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            R.id.home -> {
+                finish()
+            }
+
+            else -> {}
+        }
+        return true
     }
 }
 

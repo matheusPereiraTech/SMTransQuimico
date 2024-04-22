@@ -7,16 +7,17 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.smtransquimico.R
 import com.example.smtransquimico.model.Chat
+import com.example.smtransquimico.model.Usuario
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
+import com.google.firebase.firestore.auth.User
+import com.squareup.picasso.Picasso
 import de.hdodenhof.circleimageview.CircleImageView
 
 class ChatMensagemAdapter(
     private val chatLista: ArrayList<Chat>
 ) : RecyclerView.Adapter<ChatMensagemAdapter.ViewHolder>() {
 
-    private val MESSAGEM_TIPO_ESQUERDO = 0
-    private val MESSAGEM_TIPO_DIREITO = 1
     private var firebaseUser: FirebaseUser? = null
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
@@ -26,16 +27,16 @@ class ChatMensagemAdapter(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
 
-        if (viewType == MESSAGEM_TIPO_DIREITO) {
+        return if (viewType == 1) {
             val view =
                 LayoutInflater.from(parent.context)
                     .inflate(R.layout.item_lado_direito, parent, false)
-            return ViewHolder(view)
+            ViewHolder(view)
         } else {
             val view =
                 LayoutInflater.from(parent.context)
                     .inflate(R.layout.item_lado_esquerdo, parent, false)
-            return ViewHolder(view)
+            ViewHolder(view)
         }
     }
 
@@ -51,9 +52,9 @@ class ChatMensagemAdapter(
     override fun getItemViewType(position: Int): Int {
         firebaseUser = FirebaseAuth.getInstance().currentUser
         return if (chatLista[position].senderId == firebaseUser!!.uid) {
-            MESSAGEM_TIPO_DIREITO
+            1
         } else {
-            MESSAGEM_TIPO_ESQUERDO
+            0
         }
     }
 }

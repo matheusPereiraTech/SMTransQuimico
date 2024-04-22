@@ -32,7 +32,7 @@
         android:id="@+id/inputEdtEmailLogin"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-
+        android:textColorHint="@color/black"
         >
 
         <com.google.android.material.textfield.TextInputEditText
@@ -53,6 +53,9 @@
         android:id="@+id/inputEdtSenhaLogin"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        app:endIconMode="password_toggle"
+        android:textColorHint="@color/black"
+        app:passwordToggleEnabled="true"
         >
 
         <com.google.android.material.textfield.TextInputEditText
@@ -112,6 +115,4 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
         android:layout_marginBottom="20dp" />
-
-
 </LinearLayout>

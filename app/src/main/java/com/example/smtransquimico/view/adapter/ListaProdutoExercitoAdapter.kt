@@ -5,6 +5,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.example.smtransquimico.R
 import com.example.smtransquimico.model.Exercito
@@ -21,6 +22,7 @@ class ListaProdutoExercitoAdapter : RecyclerView.Adapter<ListaProdutoExercitoAda
         val tipoPCE: TextView = itemView.findViewById(R.id.txtlistaPCE)
         val campoAtualizar: ImageView = itemView.findViewById(R.id.imgAtualizarListaExercito)
         val campoDeletar: ImageView = itemView.findViewById(R.id.imgExcluirListaExercito)
+
     }
 
     override fun onCreateViewHolder(

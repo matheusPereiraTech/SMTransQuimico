@@ -6,7 +6,7 @@ import com.example.smtransquimico.model.Exercito
 import java.io.Serializable
 
 class CadastroProdutoExercitoController(
-    var exercito: Exercito? = null,
+    private var exercito: Exercito? = null,
     var binding: ActivityCadastraProdutoExercitoBinding
 ) {
     fun setarDadosCampoProduto(produtoSerializable: Serializable?) {

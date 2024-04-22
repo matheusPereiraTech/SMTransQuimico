@@ -5,8 +5,7 @@ import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Bundle
-import android.widget.Button
-import android.widget.ImageView
+import android.view.MenuItem
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
@@ -15,6 +14,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.smtransquimico.R
 import com.example.smtransquimico.data.FirebaseService
+import com.example.smtransquimico.databinding.ActivityChatBinding
+import com.example.smtransquimico.databinding.ActivityUsuarioChatBinding
 import com.example.smtransquimico.model.Usuario
 import com.example.smtransquimico.view.adapter.ListaUsuarioChatAdapter
 import com.google.firebase.auth.FirebaseAuth
@@ -27,42 +28,38 @@ import com.google.firebase.database.ValueEventListener
 import com.google.firebase.iid.FirebaseInstanceId
 import com.google.firebase.messaging.FirebaseMessaging
 
-class UsuarioActivity : AppCompatActivity() {
+class ActivityUsuario : AppCompatActivity() {
 
-    private lateinit var recyclerView: RecyclerView
     private var usuarioList = ArrayList<Usuario>()
-    private lateinit var btnPerfil: ImageView
-    private lateinit var botaoChatBot: Button
-
-
-    companion object {
-        private const val REQUEST_STORAGE_PERMISSION = 1
-    }
+    private lateinit var binding: ActivityUsuarioChatBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_usuario_chat)
-
-        supportActionBar?.setDisplayHomeAsUpEnabled(false)
-        inicializarComponentes()
+        binding = ActivityUsuarioChatBinding.inflate(layoutInflater)
+        val view = binding.root
+        setContentView(view)
+        
+        supportActionBar?.apply {
+            setDisplayHomeAsUpEnabled(true)
+            setHomeButtonEnabled(true)
+            title = "Chat"
+        }
 
         FirebaseService.sharedPref = getSharedPreferences("sharedPref", Context.MODE_PRIVATE)
         FirebaseInstanceId.getInstance().instanceId.addOnSuccessListener {
             FirebaseService.token = it.token
         }
 
-        recyclerView.layoutManager = LinearLayoutManager(this, RecyclerView.VERTICAL, false)
+        binding.listaUsuarioChat.layoutManager = LinearLayoutManager(this, RecyclerView.VERTICAL, false)
 
-        botaoChatBot.setOnClickListener {
-            val intent = Intent(this, ChatBotActivity::class.java)
-            startActivity(intent)
-        }
+        abrirChatBot()
 
-        btnPerfil.setOnClickListener {
-            val intent = Intent(this@UsuarioActivity, PerfilUsuarioActivity::class.java)
-            startActivity(intent)
-        }
+        abrirFotoPerfil()
 
+        validandoPermissoes()
+    }
+
+    private fun validandoPermissoes() {
         if (ContextCompat.checkSelfPermission(
                 this,
                 Manifest.permission.READ_EXTERNAL_STORAGE
@@ -73,16 +70,34 @@ class UsuarioActivity : AppCompatActivity() {
             ActivityCompat.requestPermissions(
                 this,
                 arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE),
-                REQUEST_STORAGE_PERMISSION
+                123
             )
         }
     }
 
-    private fun inicializarComponentes() {
-        recyclerView = findViewById(R.id.listaUsuarioChat)
-        btnPerfil = findViewById(R.id.imgUsuarioChat)
-        botaoChatBot = findViewById(R.id.chatBot)
+    private fun abrirFotoPerfil() {
+        binding.imgUsuarioChat.setOnClickListener {
+            val intent = Intent(this@ActivityUsuario, PerfilUsuarioActivity::class.java)
+            startActivity(intent)
+        }
+    }
 
+    private fun abrirChatBot() {
+        binding.btnChatBot.setOnClickListener {
+            val intent = Intent(this, ChatBotActivity::class.java)
+            startActivity(intent)
+        }
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            android.R.id.home -> {
+                finish()
+            }
+
+            else -> {}
+        }
+        return true
     }
 
     private fun pegarUsuarioLista() {
@@ -96,15 +111,15 @@ class UsuarioActivity : AppCompatActivity() {
 
         databaseReference.addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
+
                 for (dataSnapshot: DataSnapshot in snapshot.children) {
-                    val usuario = dataSnapshot.getValue(Usuario::class.java)
-                    if (usuario?.userId != firebase.uid) {
-                        usuarioList.add(usuario!!)
+                    val data = dataSnapshot.getValue(Usuario::class.java)
+                    if (data?.userId != firebase.uid) {
+                        usuarioList.add(data!!)
                     }
                 }
 
-                val usuarioAdapter = ListaUsuarioChatAdapter(this@UsuarioActivity, usuarioList)
-                recyclerView.adapter = usuarioAdapter
+                binding.listaUsuarioChat.adapter = ListaUsuarioChatAdapter(this@ActivityUsuario, usuarioList)
             }
 
             override fun onCancelled(error: DatabaseError) {
@@ -120,9 +135,8 @@ class UsuarioActivity : AppCompatActivity() {
     ) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         when (requestCode) {
-            REQUEST_STORAGE_PERMISSION -> {
+            123 -> {
                 if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    // Permissão concedida, carregue a lista de usuários
                     pegarUsuarioLista()
                 } else {
                     Toast.makeText(this, "Permissão de armazenamento negada", Toast.LENGTH_SHORT)

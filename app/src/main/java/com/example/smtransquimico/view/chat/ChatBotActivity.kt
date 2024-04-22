@@ -152,10 +152,7 @@ class ChatBotActivity : AppCompatActivity() {
                     val antt = childSnapshot.getValue(ANTT::class.java)
 
                     antt?.let { antts.add(it) }
-
-
                 }
-
                 mensagemCustomizada("Olá, como posso te ajudar.Sou a inteligência artificial da TransQuimico !")
 
                 mandaMensagemProduto()

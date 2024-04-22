@@ -13,7 +13,7 @@ import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.core.app.NotificationCompat
 import com.example.smtransquimico.R
-import com.example.smtransquimico.view.chat.UsuarioActivity
+import com.example.smtransquimico.view.chat.ActivityUsuario
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
 import kotlin.random.Random
@@ -42,7 +42,7 @@ class FirebaseService : FirebaseMessagingService() {
     override fun onMessageReceived(p0: RemoteMessage) {
         super.onMessageReceived(p0)
 
-        val intent = Intent(this, UsuarioActivity::class.java)
+        val intent = Intent(this, ActivityUsuario::class.java)
         val notificationManager =
             getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
         val notificationId = Random.nextInt()

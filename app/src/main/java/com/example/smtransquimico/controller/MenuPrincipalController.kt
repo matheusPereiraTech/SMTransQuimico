@@ -2,8 +2,7 @@ package com.example.smtransquimico.controller
 
 import android.content.Intent
 import com.example.smtransquimico.databinding.ActivityMenuPrincipalBinding
-import com.example.smtransquimico.view.chat.UsuarioActivity
-import com.example.smtransquimico.view.login.LoginActivity
+import com.example.smtransquimico.view.chat.ActivityUsuario
 import com.example.smtransquimico.view.produto.CadastraProdutoExercitoActivity
 import com.example.smtransquimico.view.produto.CadastraProdutoPoliciaActivity
 import com.example.smtransquimico.view.produto.CadastraProdutoPrincipalActivity
@@ -11,9 +10,6 @@ import com.example.smtransquimico.view.produto.ListaPrincipalProdutoActivity
 import com.example.smtransquimico.view.produto.ListaProdutoExercitoActivity
 import com.example.smtransquimico.view.produto.ListaProdutoPoliciactivity
 import com.example.smtransquimico.view.usuario.ConsultaUsuarioActivity
-import com.google.android.gms.auth.api.signin.GoogleSignIn
-import com.google.android.gms.auth.api.signin.GoogleSignInOptions
-import com.google.firebase.auth.FirebaseAuth
 
 class MenuPrincipalController(var binding: ActivityMenuPrincipalBinding) {
 
@@ -40,21 +36,8 @@ class MenuPrincipalController(var binding: ActivityMenuPrincipalBinding) {
 
     fun abrirChat() {
         binding.cardChat.setOnClickListener {
-            val intent = Intent(binding.root.context, UsuarioActivity::class.java)
+            val intent = Intent(binding.root.context, ActivityUsuario::class.java)
             binding.root.context.startActivity(intent)
-        }
-    }
-
-    fun deslogarAplicativo() {
-        binding.btnDeslogar.setOnClickListener {
-            FirebaseAuth.getInstance().signOut()
-
-            val googleSignInClient =
-                GoogleSignIn.getClient(binding.root.context, GoogleSignInOptions.DEFAULT_SIGN_IN)
-            googleSignInClient.signOut().addOnCompleteListener {
-                val intent = Intent(binding.root.context, LoginActivity::class.java)
-                binding.root.context.startActivity(intent)
-            }
         }
     }
 

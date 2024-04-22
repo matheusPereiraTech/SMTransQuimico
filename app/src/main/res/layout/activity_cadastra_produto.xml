@@ -149,33 +149,17 @@
 
             </LinearLayout>
 
+            <Button
+                android:id="@+id/btnSalvarProduto"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:background="@drawable/borda_botao"
+                android:text="Salvar"
+                android:textColor="@color/white"
+                android:textSize="20sp">
+            </Button>
         </LinearLayout>
 
     </ScrollView>
-
-
-    <LinearLayout
-        android:id="@+id/container_botao"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_marginBottom="20dp"
-        android:padding="10dp"
-        android:layout_below="@id/container_rolagem"
-        android:gravity="bottom|center_horizontal"
-        android:orientation="vertical">
-
-        <Button
-            android:id="@+id/btnSalvarProduto"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:background="@drawable/borda_botao"
-            android:text="Salvar"
-            android:textColor="@color/white"
-            android:textSize="20sp">
-
-        </Button>
-
-    </LinearLayout>
 
 </RelativeLayout>
