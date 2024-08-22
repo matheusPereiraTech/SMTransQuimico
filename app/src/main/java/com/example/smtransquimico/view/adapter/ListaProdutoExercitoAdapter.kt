@@ -5,7 +5,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
-import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.example.smtransquimico.R
 import com.example.smtransquimico.model.Exercito
@@ -14,15 +13,12 @@ class ListaProdutoExercitoAdapter : RecyclerView.Adapter<ListaProdutoExercitoAda
 
     private var listaExercito = mutableListOf<Exercito>()
     private var atualizarProduto: ((Exercito) -> Unit)? = null
-    private var deletarProduto: ((Exercito) -> Unit)? = null
 
     class ListaProdutoExecitoViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val numeroOrdem: TextView = itemView.findViewById(R.id.txtlistaNumeroOrdem)
         val nomenclatura: TextView = itemView.findViewById(R.id.txtlistaNomenclatura)
         val tipoPCE: TextView = itemView.findViewById(R.id.txtlistaPCE)
         val campoAtualizar: ImageView = itemView.findViewById(R.id.imgAtualizarListaExercito)
-        val campoDeletar: ImageView = itemView.findViewById(R.id.imgExcluirListaExercito)
-
     }
 
     override fun onCreateViewHolder(
@@ -50,8 +46,13 @@ class ListaProdutoExercitoAdapter : RecyclerView.Adapter<ListaProdutoExercitoAda
         this.atualizarProduto = callback
     }
 
-    fun setarDeletaLista(callback: (Exercito) -> Unit) {
-        this.deletarProduto = callback
+    fun getItem(position: Int): Exercito {
+        return listaExercito[position]
+    }
+
+    fun removeItem(position: Int) {
+        listaExercito.removeAt(position)
+        notifyItemRemoved(position)
     }
 
     fun setListaFiltrada(lExercito: List<Exercito>) {
@@ -65,8 +66,5 @@ class ListaProdutoExercitoAdapter : RecyclerView.Adapter<ListaProdutoExercitoAda
         holder.nomenclatura.text = exercito.nomenclatura
         holder.tipoPCE.text = exercito.tipoPCE
         holder.campoAtualizar.setOnClickListener { atualizarProduto?.invoke(exercito) }
-        holder.campoDeletar.setOnClickListener {
-            deletarProduto?.invoke(exercito)
-        }
     }
 }

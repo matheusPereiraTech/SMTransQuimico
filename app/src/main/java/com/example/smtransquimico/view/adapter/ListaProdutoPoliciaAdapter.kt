@@ -14,13 +14,11 @@ class ListaProdutoPoliciaAdapter :
 
     private var listaPolicia = mutableListOf<Policia>()
     private var atualizarProduto: ((Policia) -> Unit)? = null
-    private var deletarProduto: ((Policia) -> Unit)? = null
 
     class ListaProdutoPoliciaViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val codigo: TextView = itemView.findViewById(R.id.txtlistaCodigo)
         val codigoProduto: TextView = itemView.findViewById(R.id.txtlistaProdutoQumico)
         val campoAtualizar: ImageView = itemView.findViewById(R.id.imgAtualizarListaPolicia)
-        val campoDeletar: ImageView = itemView.findViewById(R.id.imgExcluirListaPolicia)
     }
 
     override fun onCreateViewHolder(
@@ -48,8 +46,13 @@ class ListaProdutoPoliciaAdapter :
         this.atualizarProduto = callback
     }
 
-    fun setarDeletaLista(callback: (Policia) -> Unit) {
-        this.deletarProduto = callback
+    fun getItem(position: Int): Policia {
+        return listaPolicia[position]
+    }
+
+    fun removeItem(position: Int) {
+        listaPolicia.removeAt(position)
+        notifyItemRemoved(position)
     }
 
     fun setListaFiltrada(lPolicia: List<Policia>) {
@@ -62,8 +65,5 @@ class ListaProdutoPoliciaAdapter :
         holder.codigo.text = policia.codigo
         holder.codigoProduto.text = policia.produtoQuimico
         holder.campoAtualizar.setOnClickListener { atualizarProduto?.invoke(policia) }
-        holder.campoDeletar.setOnClickListener {
-            deletarProduto?.invoke(policia)
-        }
     }
 }

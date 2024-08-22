@@ -10,20 +10,19 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.smtransquimico.R
-import com.example.smtransquimico.model.Usuario
+import com.example.smtransquimico.model.Users
 import com.example.smtransquimico.view.chat.ChatActivity
 import de.hdodenhof.circleimageview.CircleImageView
 
 class ListaUsuarioChatAdapter(
     private val context: Context,
-    private val listaUsuario: ArrayList<Usuario>,
+    private val listaUsers: ArrayList<Users>,
 ) : RecyclerView.Adapter<ListaUsuarioChatAdapter.ViewHolder>() {
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val textoUsuario: TextView = view.findViewById(R.id.txtNomeUsuarioChat)
-        val imagemUsuario: CircleImageView = view.findViewById(R.id.imgUsuarioChat)
         val layoutUsuario: LinearLayout = view.findViewById(R.id.layoutUsuario)
-
+        val imagemChatLista : CircleImageView = view.findViewById(R.id.imagemChatLista)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -33,15 +32,17 @@ class ListaUsuarioChatAdapter(
     }
 
     override fun getItemCount(): Int {
-        return listaUsuario.size
+        return listaUsers.size
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val usuario = listaUsuario[position]
+        val usuario = listaUsers[position]
         holder.textoUsuario.text = usuario.userName
 
-        Glide.with(context).load(usuario.profileImage).placeholder(R.drawable.imagem_perfil)
-            .into(holder.imagemUsuario)
+        Glide.with(context)
+            .load(usuario.profileImage)
+            .placeholder(R.drawable.imagem_perfil)
+            .into(holder.imagemChatLista)
 
         holder.layoutUsuario.setOnClickListener {
             val intent = Intent(context, ChatActivity::class.java)

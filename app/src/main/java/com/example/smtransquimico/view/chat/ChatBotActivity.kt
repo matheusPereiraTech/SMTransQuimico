@@ -1,7 +1,5 @@
 package com.example.smtransquimico.view.chat
 
-import android.content.Intent
-import android.net.Uri
 import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
@@ -11,10 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.smtransquimico.R
 import com.example.smtransquimico.constants.BotResposta
 import com.example.smtransquimico.constants.Constants
-import com.example.smtransquimico.constants.Constants.Companion.ABRIR_GOOGLE
-import com.example.smtransquimico.constants.Constants.Companion.ABRIR_PESQUISA
 import com.example.smtransquimico.constants.Constants.Companion.RECEBER_ID
-import com.example.smtransquimico.constants.HoraChatBotMensagem
 import com.example.smtransquimico.model.ANTT
 import com.example.smtransquimico.model.MensagemChatBot
 import com.example.smtransquimico.view.adapter.MensagemChatBotAdapter
@@ -33,7 +28,7 @@ class ChatBotActivity : AppCompatActivity() {
 
     private lateinit var adapter: MensagemChatBotAdapter
     private lateinit var databaseReferenceANTT: DatabaseReference
-    var mensagemLista = mutableListOf<MensagemChatBot>()
+    private var mensagemLista = mutableListOf<MensagemChatBot>()
 
     private lateinit var botaoEnviar: Button
     private lateinit var campoMensagemChatBot: EditText
@@ -47,11 +42,9 @@ class ChatBotActivity : AppCompatActivity() {
         setContentView(R.layout.activity_chat_bot)
 
         iniciandoComponentes()
-
         databaseReferenceANTT = FirebaseDatabase.getInstance().getReference("produtos")
 
         recyclerView()
-
         clicandoBotoes()
     }
 
@@ -74,14 +67,11 @@ class ChatBotActivity : AppCompatActivity() {
 
     private fun enviarMensagem() {
         val message = campoMensagemChatBot.text.toString()
-        val timeStamp = HoraChatBotMensagem.mostrarHora()
-
         if (message.isNotEmpty()) {
-
-            mensagemLista.add(MensagemChatBot(message, Constants.ENVIAR_ID, timeStamp))
+            mensagemLista.add(MensagemChatBot(message, Constants.ENVIAR_ID))
             campoMensagemChatBot.setText("")
 
-            adapter.inserirMensagem(MensagemChatBot(message, Constants.ENVIAR_ID, timeStamp))
+            adapter.insertMessage(MensagemChatBot(message, Constants.ENVIAR_ID))
             recyclerViewChat.scrollToPosition(adapter.itemCount - 1)
 
             botResposta(message)
@@ -89,40 +79,19 @@ class ChatBotActivity : AppCompatActivity() {
     }
 
     private fun botResposta(mensagem: String) {
-        val timeStamp = HoraChatBotMensagem.mostrarHora()
-
         GlobalScope.launch {
             delay(1000)
 
             withContext(Dispatchers.Main) {
                 resposta = BotResposta.basicResponses(mensagem, antts)
-
-
-                mensagemLista.add(MensagemChatBot(resposta, Constants.RECEBER_ID, timeStamp))
-
-                adapter.inserirMensagem(MensagemChatBot(resposta, RECEBER_ID, timeStamp))
-
+                mensagemLista.add(MensagemChatBot(resposta, Constants.RECEBER_ID))
+                adapter.insertMessage(MensagemChatBot(resposta, RECEBER_ID))
                 recyclerViewChat.scrollToPosition(adapter.itemCount - 1)
-
-                when (resposta) {
-                    ABRIR_GOOGLE -> {
-                        val site = Intent(Intent.ACTION_VIEW)
-                        site.data = Uri.parse("https://www.google.com/")
-                        startActivity(site)
-                    }
-
-                    ABRIR_PESQUISA -> {
-                        val site = Intent(Intent.ACTION_VIEW)
-                        val searchTerm: String? = mensagem.substringAfterLast("search")
-                        site.data = Uri.parse("https://www.google.com/search?&q=$searchTerm")
-                        startActivity(site)
-                    }
-                }
             }
         }
     }
 
-    fun recyclerView() {
+    private fun recyclerView() {
         adapter = MensagemChatBotAdapter()
         recyclerViewChat.adapter = adapter
         recyclerViewChat.layoutManager = LinearLayoutManager(applicationContext)
@@ -148,22 +117,16 @@ class ChatBotActivity : AppCompatActivity() {
         val valueEventListener = object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
                 for (childSnapshot in dataSnapshot.children) {
-
-                    val antt = childSnapshot.getValue(ANTT::class.java)
-
-                    antt?.let { antts.add(it) }
+                    childSnapshot.getValue(ANTT::class.java)?.let { antts.add(it) }
                 }
-                mensagemCustomizada("Olá, como posso te ajudar.Sou a inteligência artificial da TransQuimico !")
-
-                mandaMensagemProduto()
-
+                mensagemCustomizada("Olá, como posso te ajudar? Sou a inteligência artificial da TransQuimico!")
+                mandaMensagemNumeroProduto()
             }
 
             override fun onCancelled(databaseError: DatabaseError) {
                 // Trate a falha aqui
             }
         }
-
         databaseReferenceANTT.addValueEventListener(valueEventListener)
     }
 
@@ -173,29 +136,22 @@ class ChatBotActivity : AppCompatActivity() {
     }
 
     private fun mensagemCustomizada(mensagem: String) {
-
         GlobalScope.launch {
             delay(1000)
             withContext(Dispatchers.Main) {
-                val timeStamp = HoraChatBotMensagem.mostrarHora()
-                mensagemLista.add(MensagemChatBot(mensagem, RECEBER_ID, timeStamp))
-                adapter.inserirMensagem(MensagemChatBot(mensagem, RECEBER_ID, timeStamp))
-
+                mensagemLista.add(MensagemChatBot(mensagem, RECEBER_ID))
+                adapter.insertMessage(MensagemChatBot(mensagem, RECEBER_ID))
                 recyclerViewChat.scrollToPosition(adapter.itemCount - 1)
             }
         }
     }
 
-    private fun mandaMensagemProduto() {
-
-        val mensagem = "Por Favor, forneça o número de ONU do produto específico !"
-
+    private fun mandaMensagemNumeroProduto() {
         GlobalScope.launch {
             delay(1000)
             withContext(Dispatchers.Main) {
-                val timeStamp = HoraChatBotMensagem.mostrarHora()
-                mensagemLista.add(MensagemChatBot(mensagem, RECEBER_ID, timeStamp))
-                adapter.inserirMensagem(MensagemChatBot(mensagem, RECEBER_ID, timeStamp))
+                mensagemLista.add(MensagemChatBot("Número de ONU ou Nome do produto específico!", RECEBER_ID))
+                adapter.insertMessage(MensagemChatBot("Número de ONU ou Nome do produto específico!", RECEBER_ID))
 
                 recyclerViewChat.scrollToPosition(adapter.itemCount - 1)
             }

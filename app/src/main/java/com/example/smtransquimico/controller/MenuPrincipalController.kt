@@ -6,7 +6,7 @@ import com.example.smtransquimico.view.chat.ActivityUsuario
 import com.example.smtransquimico.view.produto.CadastraProdutoExercitoActivity
 import com.example.smtransquimico.view.produto.CadastraProdutoPoliciaActivity
 import com.example.smtransquimico.view.produto.CadastraProdutoPrincipalActivity
-import com.example.smtransquimico.view.produto.ListaPrincipalProdutoActivity
+import com.example.smtransquimico.view.produto.ListMainProduceActivity
 import com.example.smtransquimico.view.produto.ListaProdutoExercitoActivity
 import com.example.smtransquimico.view.produto.ListaProdutoPoliciactivity
 import com.example.smtransquimico.view.usuario.ConsultaUsuarioActivity
@@ -15,7 +15,7 @@ class MenuPrincipalController(var binding: ActivityMenuPrincipalBinding) {
 
     fun listarProdutoPrincipal() {
         binding.cardListaproduto.setOnClickListener {
-            val intent = Intent(binding.root.context, ListaPrincipalProdutoActivity::class.java)
+            val intent = Intent(binding.root.context, ListMainProduceActivity::class.java)
             binding.root.context.startActivity(intent)
         }
     }

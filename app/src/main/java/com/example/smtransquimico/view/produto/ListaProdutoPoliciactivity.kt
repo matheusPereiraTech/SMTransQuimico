@@ -3,10 +3,11 @@ package com.example.smtransquimico.view.produto
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
-import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
 import androidx.lifecycle.lifecycleScope
+import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.smtransquimico.R
@@ -18,6 +19,7 @@ import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import kotlinx.coroutines.launch
+import org.apache.commons.codec.language.DoubleMetaphone
 import java.util.Locale
 
 class ListaProdutoPoliciactivity : AppCompatActivity() {
@@ -59,6 +61,7 @@ class ListaProdutoPoliciactivity : AppCompatActivity() {
 
             override fun onQueryTextChange(newText: String?): Boolean {
                 filtroProduto(newText)
+                filtrarProdutoQuimico(newText)
                 return true
             }
 
@@ -66,22 +69,88 @@ class ListaProdutoPoliciactivity : AppCompatActivity() {
     }
 
     private fun filtroProduto(query: String?) {
+        val listaFiltrada = ArrayList<Policia>()
         if (query != null) {
-            val listaFiltrada = ArrayList<Policia>()
             for (i in policias) {
                 if (i.codigo.toLowerCase(Locale.ROOT)
-                        .contains(query) || i.produtoQuimico.toLowerCase(Locale.ROOT)
                         .contains(query)
                 ) {
                     listaFiltrada.add(i)
                 }
             }
-            if (listaFiltrada.isEmpty()) {
-                Toast.makeText(this, "Produto não encontrado", Toast.LENGTH_SHORT).show()
-            } else {
+            if (listaFiltrada.isNotEmpty()) {
                 adapter.setListaFiltrada(listaFiltrada)
             }
         }
+    }
+
+    private fun filtrarProdutoQuimico(query: String?) {
+        val doubleMetaphone = DoubleMetaphone()
+        val queryEncoded = query?.let { doubleMetaphone.encode(it) }
+        val lFiltered = ArrayList<Policia>()
+
+        if (query.isNullOrEmpty()) {
+            adapter.setListaFiltrada(policias)
+            return
+        }
+
+        if (!queryEncoded.isNullOrEmpty()) {
+            for (item in policias) {
+                val codigoEncoded = doubleMetaphone.encode(item.codigo)
+
+                if (codigoEncoded.contains(queryEncoded)) {
+                    lFiltered.add(item)
+                }
+            }
+
+            if (lFiltered.isNotEmpty()) {
+                adapter.setListaFiltrada(lFiltered)
+            }
+        }
+    }
+
+    private fun setTouchSwipe() {
+        val itemTouchHelper = ItemTouchHelper(object : ItemTouchHelper.SimpleCallback(
+            0,
+            ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT
+        ) {
+            override fun onMove(
+                recyclerView: RecyclerView,
+                viewHolder: RecyclerView.ViewHolder,
+                target: RecyclerView.ViewHolder
+            ): Boolean {
+                return false
+            }
+
+            override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+                val position = viewHolder.adapterPosition
+                showDeleteConfirmationDialog(position)
+            }
+        })
+
+        itemTouchHelper.attachToRecyclerView(recyclerView)
+    }
+
+    private fun showDeleteConfirmationDialog(position: Int) {
+        val builder = AlertDialog.Builder(this)
+        builder.setTitle("Confirmar exclusão")
+        builder.setMessage("Tem certeza que deseja excluir este item?")
+        builder.setPositiveButton("Sim") { dialog, _ ->
+            val deletedItem = adapter.getItem(position)
+            adapter.removeItem(position)
+
+            lifecycleScope.launch {
+                databaseReference.child(deletedItem.codigo).removeValue()
+            }
+
+            dialog.dismiss()
+        }
+        builder.setNegativeButton("Não") { dialog, _ ->
+            adapter.notifyDataSetChanged()
+            dialog.dismiss()
+        }
+        val dialog = builder.create()
+        dialog.show()
     }
 
 
@@ -90,17 +159,12 @@ class ListaProdutoPoliciactivity : AppCompatActivity() {
         adapter = ListaProdutoPoliciaAdapter()
         recyclerView.adapter = adapter
 
+        setTouchSwipe()
+
         adapter.setarAtualizaLista { produto ->
             val intent = Intent(this, CadastraProdutoPoliciaActivity::class.java)
             intent.putExtra("Dados", produto)
             startActivity(intent)
-        }
-
-        adapter.setarDeletaLista { policia ->
-            lifecycleScope.launch {
-                val produtoRef = databaseReference.child(policia.codigo)
-                produtoRef.removeValue()
-            }
         }
     }
 

@@ -24,11 +24,8 @@ class CadastraProdutoExercitoActivity : AppCompatActivity() {
         setContentView(view)
 
         setandoBarraInicial()
-        val database = FirebaseDatabase.getInstance()
-        val produtosRef = database.getReference("produto_exercito")
-        controller = CadastroProdutoExercitoController(exercito, binding)
         initExtras()
-        adicionarProduto(produtosRef)
+        adicionarProduto(FirebaseDatabase.getInstance().getReference("produto_exercito"))
     }
 
     private fun setandoBarraInicial() {
@@ -38,17 +35,14 @@ class CadastraProdutoExercitoActivity : AppCompatActivity() {
     }
 
     private fun initExtras() {
-        val produtoSerializable = intent.getSerializableExtra("Dados")
-        controller.setarDadosCampoProduto(produtoSerializable)
+        controller = CadastroProdutoExercitoController(exercito, binding)
+        controller.setarDadosCampoProduto(intent.getSerializableExtra("Dados"))
     }
 
     private fun adicionarProduto(produtosRef: DatabaseReference) {
         binding.btnSalvarProdutoExercito.setOnClickListener {
 
             if (exercito == null) {
-                val chave = binding.txtNumeroOrdem.text.toString()
-                val produto = controller.salvarProduto()
-
                 if (controller.setErroCampoNumeroOrdem() || controller.setErroCampoNomenclatura() || controller.setErroCampoTipoPCE()) {
 
                     if (controller.setErroCampoNumeroOrdem()) {
@@ -65,31 +59,22 @@ class CadastraProdutoExercitoActivity : AppCompatActivity() {
 
                     return@setOnClickListener
                 }
-
-                produtosRef.child(chave).setValue(produto)
+                produtosRef.child(binding.txtNumeroOrdem.text.toString()).setValue(controller.salvarProduto())
                 voltarMenuPrincipal()
             } else {
-                val chaveExistente = exercito!!.numeroOrdem
-                val produtoAtualizado = controller.salvarProduto()
-
                 if (controller.setErroCampoNumeroOrdem() || controller.setErroCampoNomenclatura() || controller.setErroCampoTipoPCE()) {
-
                     if (controller.setErroCampoNumeroOrdem()) {
                         binding.inputTxtNumeroOrdem.error = "Campo Obrigatório"
                     }
-
                     if (controller.setErroCampoNomenclatura()) {
                         binding.inputTxtNomenclaturaProduto.error = "Campo Obrigatório"
                     }
-
                     if (controller.setErroCampoTipoPCE()) {
                         binding.inputTxtTipoPCE.error = "Campo Obrigatório"
                     }
-
                     return@setOnClickListener
                 }
-
-                produtosRef.child(chaveExistente).setValue(produtoAtualizado)
+                produtosRef.child(exercito!!.numeroOrdem).setValue(controller.salvarProduto())
                 voltarMenuPrincipal()
             }
         }

@@ -24,12 +24,8 @@ class CadastraProdutoPoliciaActivity : AppCompatActivity() {
         setContentView(view)
 
         setandoBarraInicial()
-
-        val database = FirebaseDatabase.getInstance()
-        val produtosRef = database.getReference("produto_policia")
-        controller = CadastroProdutoPoliciaController(policia, binding)
         initExtras()
-        adicionarProduto(produtosRef)
+        adicionarProduto(FirebaseDatabase.getInstance().getReference("produto_policia"))
     }
 
     private fun setandoBarraInicial() {
@@ -39,57 +35,42 @@ class CadastraProdutoPoliciaActivity : AppCompatActivity() {
     }
 
     private fun initExtras() {
-        val produtoSerializable = intent.getSerializableExtra("Dados")
-        controller.setarDadosCampoProduto(produtoSerializable)
+        controller = CadastroProdutoPoliciaController(policia, binding)
+        controller.setarDadosCampoProduto(intent.getSerializableExtra("Dados"))
     }
 
     private fun adicionarProduto(produtosRef: DatabaseReference) {
         binding.btnSalvarProdutoPolicia.setOnClickListener {
-
             if (policia == null) {
-                val chave = binding.edtCodigoQuimico.text.toString()
-                val produto = controller.salvarProduto()
-
-
                 if (controller.setErroCodigoQuimico() || controller.setErroProdutoQuimico()) {
-
                     if (controller.setErroCodigoQuimico()) {
                         binding.inputEdtCodigoQuimico.error = "Campo Obrigatório"
                     }
-
                     if (controller.setErroProdutoQuimico()) {
                         binding.inputEdtProdutoQuimic.error = "Campo Obrigatório"
                     }
-
                     return@setOnClickListener
                 }
 
-                produtosRef.child(chave).setValue(produto)
+                produtosRef.child(binding.edtCodigoQuimico.text.toString()).setValue(controller.salvarProduto())
                 voltarMenuPrincipal()
             } else {
-                val chaveExistente = policia!!.codigo
-                val produtoAtualizado = controller.salvarProduto()
-
                 if (controller.setErroCodigoQuimico() || controller.setErroProdutoQuimico()) {
-
                     if (controller.setErroCodigoQuimico()) {
                         binding.inputEdtCodigoQuimico.error = "Campo Obrigatório"
                     }
-
                     if (controller.setErroProdutoQuimico()) {
                         binding.inputEdtProdutoQuimic.error = "Campo Obrigatório"
                     }
-
                     return@setOnClickListener
                 }
-
-                produtosRef.child(chaveExistente).setValue(produtoAtualizado)
+                produtosRef.child(policia!!.codigo).setValue(controller.salvarProduto())
                 voltarMenuPrincipal()
             }
         }
     }
 
-    fun voltarMenuPrincipal() {
+    private fun voltarMenuPrincipal() {
         val intent = Intent(this, MenuPrincipalActivity::class.java)
         startActivity(intent)
     }

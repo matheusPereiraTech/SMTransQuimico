@@ -23,137 +23,109 @@ import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.GoogleAuthProvider
 
 class LoginActivity : AppCompatActivity() {
-
     private lateinit var googleEntrarCliente: GoogleSignInClient
     private var firebaseUser: FirebaseUser? = null
     private var auth = FirebaseAuth.getInstance()
     private lateinit var controller: LoginController
     private lateinit var binding: ActivityLoginBinding
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityLoginBinding.inflate(layoutInflater)
-        val view = binding.root
-        setContentView(view)
+        setContentView(binding.root)
 
-        supportActionBar?.hide()
-        window.statusBarColor = Color.parseColor("#083087")
-
+        settingsActionBar()
         firebaseUser = auth.currentUser
 
         cliqueBotaoCadastrar()
-        cliqueBotaoEntrar()
-        cliqueBotaoGoogle()
+        clickButtonOpen()
+        clickButtonGoogle()
         cliqueBotaoEsqueciSenha()
 
         controller = LoginController(this, binding)
-
     }
 
-    private fun cliqueBotaoGoogle() {
+    private fun settingsActionBar() {
+        supportActionBar?.hide()
+        window.statusBarColor = Color.parseColor("#083087")
+    }
+    private fun clickButtonGoogle() {
         val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
             .requestIdToken(getString(R.string.default_web_client_id))
             .requestEmail()
             .build()
 
         googleEntrarCliente = GoogleSignIn.getClient(this, gso)
-
         binding.btnGoogle.setOnClickListener {
-            entrarContaGoogle()
+            signInAccountGoogle()
         }
     }
-
-    private fun entrarContaGoogle() {
-        val signIntent = googleEntrarCliente.signInIntent
-        launcher.launch(signIntent)
-    }
+    private fun signInAccountGoogle() = launcher.launch(googleEntrarCliente.signInIntent)
 
     private val launcher =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
             if (result.resultCode == Activity.RESULT_OK) {
                 val task = GoogleSignIn.getSignedInAccountFromIntent(result.data)
-                lidarResultados(task)
+                dealResults(task)
             }
         }
-
-    private fun lidarResultados(task: Task<GoogleSignInAccount>) {
+    private fun dealResults(task: Task<GoogleSignInAccount>) {
         if (task.isSuccessful) {
             val conta: GoogleSignInAccount? = task.result
             if (conta != null) {
-                atualizaUi(conta)
+                updateUi(conta)
             }
         } else {
             Toast.makeText(this, task.exception.toString(), Toast.LENGTH_SHORT).show()
         }
     }
-
-    private fun atualizaUi(conta: GoogleSignInAccount) {
-        val credenciais = GoogleAuthProvider.getCredential(conta.idToken, null)
-        auth.signInWithCredential(credenciais).addOnCompleteListener {
+    private fun updateUi(account: GoogleSignInAccount) {
+        val credential = GoogleAuthProvider.getCredential(account.idToken, null)
+        auth.signInWithCredential(credential).addOnCompleteListener {
             if (it.isSuccessful) {
-                exibirTelaMenuPrincipal()
+                displayScreenMenuMain()
             } else {
                 Toast.makeText(this, it.exception.toString(), Toast.LENGTH_SHORT).show()
             }
         }
     }
-
-    private fun cliqueBotaoEsqueciSenha() {
+    private fun cliqueBotaoEsqueciSenha() =
         binding.btnEsqueciSenha.setOnClickListener {
-            val intent = Intent(this, RedefinirSenhaActivity::class.java)
-            startActivity(intent)
+            startActivity(Intent(this, RedefinirSenhaActivity::class.java))
         }
-    }
-
-    private fun cliqueBotaoCadastrar() {
+    private fun cliqueBotaoCadastrar() =
         binding.btnCadastrarLogin.setOnClickListener {
-            val intent = Intent(this, CadastroUsuarioActivity::class.java)
-            startActivity(intent)
+            startActivity(Intent(this, CadastroUsuarioActivity::class.java))
         }
-    }
-
-    fun mostrarLoginIncorreto(mensagem: String) {
-        val snackbar =
-            Snackbar.make(binding.btnEntrarLogin, mensagem, Snackbar.LENGTH_SHORT)
-        snackbar.setBackgroundTint(Color.RED)
-        snackbar.show()
-    }
-
-    private fun cliqueBotaoEntrar() {
-        binding.btnEntrarLogin.setOnClickListener { view ->
+    fun showLoginIncorrect(message: String) =
+        Snackbar.make(binding.btnEntrarLogin, message, Snackbar.LENGTH_SHORT)
+            .setBackgroundTint(Color.RED).show()
+    private fun clickButtonOpen() {
+        binding.btnEntrarLogin.setOnClickListener {
 
             if (controller.setErroEmailLogin() || controller.setErroSenhaLogin()) {
-
-                if (controller.setErroEmailLogin()) {
+                if (controller.setErroEmailLogin())
                     binding.inputEdtEmailLogin.error = "Campo Obrigatório"
-                }
-
-                if (controller.setErroSenhaLogin()) {
+                if (controller.setErroSenhaLogin())
                     binding.inputEdtSenhaLogin.error = "Campo Obrigatório"
-                }
 
                 return@setOnClickListener
             }
-            controller.clicarBotaoCadastro()
+            controller.clickButtonRegister()
         }
     }
-
-    fun verificarLoginEmailSenha(email: String, senha: String) {
+    fun checkLoginEmailAndPassword(email: String, password: String) {
         auth.signInWithEmailAndPassword(
             email,
-            senha
-        ).addOnCompleteListener { autenticacao ->
-            if (autenticacao.isSuccessful) {
-                exibirTelaMenuPrincipal()
-            }
+            password
+        ).addOnCompleteListener {
+            if (it.isSuccessful)
+                displayScreenMenuMain()
         }.addOnFailureListener {
-            mostrarLoginIncorreto("Erro ao fazer o login do usuário!")
+            showLoginIncorrect("Erro ao fazer o login do usuário!")
         }
     }
-
-    private fun exibirTelaMenuPrincipal() {
-        val intent = Intent(this, MenuPrincipalActivity::class.java)
-        startActivity(intent)
+    private fun displayScreenMenuMain() {
+        startActivity(Intent(this, MenuPrincipalActivity::class.java))
         finish()
     }
 }

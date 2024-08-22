@@ -7,11 +7,11 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.smtransquimico.R
-import com.example.smtransquimico.model.Usuario
+import com.example.smtransquimico.model.Users
 
 class QueryUserAdapter(
     private val context: Context,
-    private val listaConsultaUsuario: ArrayList<Usuario>
+    private val listaConsultaUsers: ArrayList<Users>
 ) : RecyclerView.Adapter<QueryUserAdapter.ViewHolder>() {
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
@@ -30,12 +30,10 @@ class QueryUserAdapter(
         return QueryUserAdapter.ViewHolder(view)
     }
 
-    override fun getItemCount(): Int {
-        return listaConsultaUsuario.size
-    }
+    override fun getItemCount(): Int = listaConsultaUsers.size
 
     override fun onBindViewHolder(holder: QueryUserAdapter.ViewHolder, position: Int) {
-        val usuario = listaConsultaUsuario[position]
+        val usuario = listaConsultaUsers[position]
         holder.txtNomeConsultaUsuario.text = usuario.userName
         holder.txtTelefoneConsultausuario.text = usuario.phone
         holder.txtEmailConsultaUsuario.text = usuario.email

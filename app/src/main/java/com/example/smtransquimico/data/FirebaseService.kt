@@ -19,12 +19,9 @@ import com.google.firebase.messaging.RemoteMessage
 import kotlin.random.Random
 
 class FirebaseService : FirebaseMessagingService() {
-
-    val CHANNEL_ID = "my_notification_channel"
-
+    private val CHANNEL_ID = "my_notification_channel"
     companion object {
         var sharedPref: SharedPreferences? = null
-
         var token: String?
             get() {
                 return sharedPref?.getString("token", "")
@@ -74,6 +71,5 @@ class FirebaseService : FirebaseMessagingService() {
             lightColor = Color.WHITE
         }
         notificationManager.createNotificationChannel(channel)
-
     }
 }

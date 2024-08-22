@@ -7,7 +7,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.smtransquimico.R
-import com.example.smtransquimico.model.Usuario
+import com.example.smtransquimico.model.Users
 import com.example.smtransquimico.view.adapter.QueryUserAdapter
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
@@ -20,7 +20,7 @@ import com.google.firebase.database.ValueEventListener
 class ConsultaUsuarioActivity : AppCompatActivity() {
 
     private lateinit var recyclerView: RecyclerView
-    private var listaConsultaUsuario = ArrayList<Usuario>()
+    private var listaConsultaUsers = ArrayList<Users>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -50,15 +50,15 @@ class ConsultaUsuarioActivity : AppCompatActivity() {
             override fun onDataChange(snapshot: DataSnapshot) {
 
                 for (dataSnapShot: DataSnapshot in snapshot.children) {
-                    val usuario = dataSnapShot.getValue(Usuario::class.java)
+                    val users = dataSnapShot.getValue(Users::class.java)
 
-                    if (usuario!!.userId != firebase.uid) {
-                        listaConsultaUsuario.add(usuario)
+                    if (users!!.userId != firebase.uid) {
+                        listaConsultaUsers.add(users)
                     }
                 }
 
                 val usuarioAdapter =
-                    QueryUserAdapter(this@ConsultaUsuarioActivity, listaConsultaUsuario)
+                    QueryUserAdapter(this@ConsultaUsuarioActivity, listaConsultaUsers)
 
                 recyclerView.adapter = usuarioAdapter
 

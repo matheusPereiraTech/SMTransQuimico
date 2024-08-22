@@ -9,7 +9,6 @@ import com.example.smtransquimico.R
 import com.google.firebase.auth.FirebaseAuth
 
 class RedefinirSenhaActivity : AppCompatActivity() {
-
     private lateinit var campoIdentificador: EditText
     private lateinit var botaoSolicitarRedefinicaoSenha: Button
     private lateinit var auth: FirebaseAuth

@@ -12,16 +12,15 @@ import com.example.smtransquimico.model.MensagemChatBot
 
 class MensagemChatBotAdapter : RecyclerView.Adapter<MensagemChatBotAdapter.MensagemViewHolder>() {
 
-    var mensagemLista = mutableListOf<MensagemChatBot>()
+    var mtListMessage = mutableListOf<MensagemChatBot>()
 
     inner class MensagemViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-
-        val usuarioEnvia = itemView.findViewById<TextView>(R.id.usuarioEnvia)
-        val usuarioRecebe = itemView.findViewById<TextView>(R.id.usuarioRecebe)
+        val userSended: TextView = itemView.findViewById(R.id.usuarioEnvia)
+        val userReceived: TextView = itemView.findViewById(R.id.usuarioRecebe)
 
         init {
             itemView.setOnClickListener {
-                mensagemLista.removeAt(adapterPosition)
+                mtListMessage.removeAt(adapterPosition)
                 notifyItemRemoved(adapterPosition)
             }
         }
@@ -34,36 +33,32 @@ class MensagemChatBotAdapter : RecyclerView.Adapter<MensagemChatBotAdapter.Mensa
         )
     }
 
-    override fun getItemCount(): Int {
-        return mensagemLista.size
-    }
+    override fun getItemCount(): Int = mtListMessage.size
 
     override fun onBindViewHolder(holder: MensagemViewHolder, position: Int) {
-        val mensagemChatBot = mensagemLista[position]
-
-        when (mensagemChatBot.id) {
+        when (mtListMessage[position].id) {
             ENVIAR_ID -> {
-                holder.usuarioEnvia.apply {
-                    text = mensagemChatBot.mensagem
+                holder.userSended.apply {
+                    text = mtListMessage[position].mensagem.toString()
                     visibility = View.VISIBLE
                 }
 
-                holder.usuarioRecebe.visibility = View.GONE
+                holder.userReceived.visibility = View.GONE
             }
 
             RECEBER_ID -> {
-                holder.usuarioRecebe.apply {
-                    text = mensagemChatBot.mensagem
+                holder.userReceived.apply {
+                    text = mtListMessage[position].mensagem
                     visibility = View.VISIBLE
                 }
-                holder.usuarioEnvia.visibility = View.GONE
+                holder.userSended.visibility = View.GONE
             }
         }
     }
 
-    fun inserirMensagem(mensagem: MensagemChatBot) {
-        this.mensagemLista.add(mensagem)
-        notifyItemInserted(mensagemLista.size)
+    fun insertMessage(message: MensagemChatBot) {
+        this.mtListMessage.add(message)
+        notifyItemInserted(mtListMessage.size)
         notifyDataSetChanged()
     }
 }

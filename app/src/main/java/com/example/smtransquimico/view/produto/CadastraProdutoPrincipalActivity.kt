@@ -3,7 +3,6 @@ package com.example.smtransquimico.view.produto
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
-import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import com.example.smtransquimico.controller.CadastroProdutoPrincipalController
 import com.example.smtransquimico.databinding.ActivityCadastraProdutoBinding
@@ -11,7 +10,6 @@ import com.example.smtransquimico.model.ANTT
 import com.example.smtransquimico.view.menu.MenuPrincipalActivity
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
-import com.itextpdf.text.pdf.PdfReader
 
 
 class CadastraProdutoPrincipalActivity : AppCompatActivity() {
@@ -29,11 +27,9 @@ class CadastraProdutoPrincipalActivity : AppCompatActivity() {
 
         setandoBarraInicial()
 
-        val produtosRef = database.getReference("produtos")
-
         controller = CadastroProdutoPrincipalController(antt, binding)
         initExtras()
-        adicionarProduto(produtosRef)
+        adicionarProduto(database.getReference("produtos"))
     }
 
     private fun setandoBarraInicial() {
@@ -51,43 +47,28 @@ class CadastraProdutoPrincipalActivity : AppCompatActivity() {
         binding.btnSalvarProduto.setOnClickListener {
 
             if (antt == null) {
-                val chave = binding.txtNumeroOnu.text.toString()
-                val produto = controller.salvarProduto()
-
                 if (controller.setErroCampoNumeroONU() || controller.setErroNomeDescricao()) {
-
                     if (controller.setErroCampoNumeroONU()) {
                         binding.inputTxtNumeroOnu.error = "Campo Obrigatório"
                     }
-
                     if (controller.setErroNomeDescricao()) {
                         binding.inputTxtNomeDescricao.error = "Campo Obrigatório"
                     }
-
                     return@setOnClickListener
                 }
-
-                produtosRef.child(chave).setValue(produto)
+                produtosRef.child(binding.txtNumeroOnu.text.toString()).setValue(controller.salvarProduto())
                 voltarMenuPrincipal()
             } else {
-                val chaveExistente = antt!!.numeroONU
-                val produtoAtualizado = controller.salvarProduto()
-
                 if (controller.setErroCampoNumeroONU() || controller.setErroNomeDescricao()) {
-
                     if (controller.setErroCampoNumeroONU()) {
                         binding.inputTxtNumeroOnu.error = "Campo Obrigatório"
                     }
-
                     if (controller.setErroNomeDescricao()) {
                         binding.inputTxtNomeDescricao.error = "Campo Obrigatório"
                     }
-
                     return@setOnClickListener
                 }
-
-
-                produtosRef.child(chaveExistente).setValue(produtoAtualizado)
+                produtosRef.child(antt!!.numeroONU).setValue(controller.salvarProduto())
                 voltarMenuPrincipal()
             }
         }

@@ -3,10 +3,11 @@ package com.example.smtransquimico.view.produto
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
-import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
 import androidx.lifecycle.lifecycleScope
+import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.smtransquimico.R
@@ -18,6 +19,7 @@ import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import kotlinx.coroutines.launch
+import org.apache.commons.codec.language.DoubleMetaphone
 import java.util.Locale
 
 class ListaProdutoExercitoActivity : AppCompatActivity() {
@@ -52,29 +54,95 @@ class ListaProdutoExercitoActivity : AppCompatActivity() {
             }
 
             override fun onQueryTextChange(newText: String?): Boolean {
-                filtroProduto(newText)
+                filtroNumeroOrdem(newText)
+                filtroNomenclatura(newText)
                 return true
             }
 
         })
     }
 
-    private fun filtroProduto(query: String?) {
+    private fun filtroNumeroOrdem(query: String?) {
         if (query != null) {
             val listaFiltrada = ArrayList<Exercito>()
             for (i in exercitos) {
                 if (i.numeroOrdem.toLowerCase(Locale.ROOT)
-                        .contains(query) || i.nomenclatura.toLowerCase(Locale.ROOT).contains(query)
+                        .contains(query)
                 ) {
                     listaFiltrada.add(i)
                 }
             }
-            if (listaFiltrada.isEmpty()) {
-                Toast.makeText(this, "Produto não encontrado", Toast.LENGTH_SHORT).show()
-            } else {
+            if (listaFiltrada.isNotEmpty()) {
                 adapter.setListaFiltrada(listaFiltrada)
             }
         }
+    }
+
+    private fun filtroNomenclatura(query: String?) {
+        val doubleMetaphone = DoubleMetaphone()
+        val queryEncoded = query?.let { doubleMetaphone.encode(it) }
+        val lFiltered = ArrayList<Exercito>()
+
+        if (query.isNullOrEmpty()) {
+            adapter.setListaFiltrada(exercitos)
+            return
+        }
+
+        if (!queryEncoded.isNullOrEmpty()) {
+            for (item in exercitos) {
+                if (doubleMetaphone.encode(item.nomenclatura).contains(queryEncoded)) {
+                    lFiltered.add(item)
+                }
+            }
+
+            if (lFiltered.isNotEmpty()) {
+                adapter.setListaFiltrada(lFiltered)
+            }
+        }
+    }
+
+    private fun showDeleteConfirmationDialog(position: Int) {
+        val builder = AlertDialog.Builder(this)
+        builder.setTitle("Confirmar exclusão")
+        builder.setMessage("Tem certeza que deseja excluir este item?")
+        builder.setPositiveButton("Sim") { dialog, _ ->
+            val deletedItem = adapter.getItem(position)
+            adapter.removeItem(position)
+
+            lifecycleScope.launch {
+                databaseReference.child(deletedItem.numeroOrdem).removeValue()
+            }
+
+            dialog.dismiss()
+        }
+        builder.setNegativeButton("Não") { dialog, _ ->
+            adapter.notifyDataSetChanged()
+            dialog.dismiss()
+        }
+        val dialog = builder.create()
+        dialog.show()
+    }
+
+    private fun setTouchSwipe(adapter: ListaProdutoExercitoAdapter) {
+        val itemTouchHelper = ItemTouchHelper(object : ItemTouchHelper.SimpleCallback(
+            0,
+            ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT
+        ) {
+            override fun onMove(
+                recyclerView: RecyclerView,
+                viewHolder: RecyclerView.ViewHolder,
+                target: RecyclerView.ViewHolder
+            ): Boolean {
+                return false
+            }
+
+            override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+                val position = viewHolder.adapterPosition
+                showDeleteConfirmationDialog(position)
+            }
+        })
+
+        itemTouchHelper.attachToRecyclerView(recyclerView)
     }
 
     private fun iniciandoComponentes() {
@@ -87,17 +155,12 @@ class ListaProdutoExercitoActivity : AppCompatActivity() {
         adapter = ListaProdutoExercitoAdapter()
         recyclerView.adapter = adapter
 
+        setTouchSwipe(adapter)
+
         adapter.setarAtualizaLista { produto ->
             val intent = Intent(this, CadastraProdutoExercitoActivity::class.java)
             intent.putExtra("Dados", produto)
             startActivity(intent)
-        }
-
-        adapter.setarDeletaLista { exercito ->
-            lifecycleScope.launch {
-                val produtoExercitoRef = databaseReference.child(exercito.numeroOrdem)
-                produtoExercitoRef.removeValue()
-            }
         }
     }
 

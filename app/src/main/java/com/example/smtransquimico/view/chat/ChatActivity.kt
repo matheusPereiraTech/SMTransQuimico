@@ -1,20 +1,20 @@
 package com.example.smtransquimico.view.chat
 
-import android.net.Uri
 import android.os.Bundle
-import android.text.Editable
 import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
+import com.example.smtransquimico.R
 import com.example.smtransquimico.RetrofitInstance
 import com.example.smtransquimico.controller.ChatController
 import com.example.smtransquimico.databinding.ActivityChatBinding
 import com.example.smtransquimico.model.Chat
 import com.example.smtransquimico.model.NotificationData
 import com.example.smtransquimico.model.PushNotification
-import com.example.smtransquimico.model.Usuario
+import com.example.smtransquimico.model.Users
 import com.example.smtransquimico.view.adapter.ChatMensagemAdapter
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
@@ -40,37 +40,44 @@ class ChatActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityChatBinding.inflate(layoutInflater)
-        val view = binding.root
-        setContentView(view)
+        setContentView(binding.root)
 
         controller = ChatController(binding)
-
-        binding.listaChat.layoutManager = LinearLayoutManager(this, RecyclerView.VERTICAL, false)
 
         val intent = intent
         val userId = intent.getStringExtra("userId")
         val userName = intent.getStringExtra("userName")
 
-
-        binding.imgVoltarChat.setOnClickListener {
-            onBackPressed()
-        }
+        setarBotaoVoltarChat()
 
         firebaseUser = FirebaseAuth.getInstance().currentUser
         reference = FirebaseDatabase.getInstance().getReference("Users").child(userId!!)
 
-        setarImagemBancoFirebase()
         popularChatComDadosFirebase(firebaseUser!!.uid, userId)
 
         clicarBotaoEnviarMensagem(userId, userName)
     }
 
+    private fun setarBotaoVoltarChat() {
+        binding.imgVoltarChat.setOnClickListener {
+            onBackPressed()
+        }
+    }
+
     private fun setarImagemBancoFirebase() {
         reference!!.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
-                val data = snapshot.getValue(Usuario::class.java)
-                binding.txtNomeChat.text = data!!.userName
-                binding.imgChat.setImageURI(Uri.parse(data.profileImage))
+                val data = snapshot.getValue(Users::class.java)
+
+                data?.let {
+                    binding.txtNomeChat.text = it.userName
+                    if (it.profileImage == "") {
+                        controller.setImagemPerfil(R.drawable.imagem_perfil)
+                    } else {
+                        Glide.with(this@ChatActivity).load(it.profileImage).into(binding.imgChat)
+                        setarAdaptador(data.profileImage)
+                    }
+                }
             }
 
             override fun onCancelled(error: DatabaseError) {
@@ -79,17 +86,17 @@ class ChatActivity : AppCompatActivity() {
         })
     }
     private fun clicarBotaoEnviarMensagem(id: String, nome: String?) {
-        val campoVazio = Editable.Factory.getInstance().newEditable("")
-        val mensagem: String = binding.edtMensagem.text.toString()
 
         binding.btnEnviarMensagem.setOnClickListener {
 
+            val mensagem: String = binding.edtMensagem.text.toString()
+
             if (mensagem.isEmpty()) {
-                Toast.makeText(applicationContext, "Mensagem Vazia", Toast.LENGTH_SHORT).show()
-                binding.edtMensagem.text = campoVazio
-            } else {
+                Toast.makeText(this@ChatActivity, "Mensagem Vazia", Toast.LENGTH_SHORT).show()
+            }  else {
                 enviarMensagem(firebaseUser!!.uid, id, mensagem)
-                binding.edtMensagem.text = campoVazio
+                binding.edtMensagem.text.clear()
+
                 topic = "/topics/$id"
                 enviarNotificacao(nome, mensagem)
             }
@@ -121,25 +128,24 @@ class ChatActivity : AppCompatActivity() {
 
                     val data = dataSnapShot.getValue(Chat::class.java)
 
-
-                    if (data!!.senderId == enviarId && data.receiverId == receberId) {
-
-                        if (data.senderId == receberId && data.receiverId == enviarId)
-                            setarAdaptador()
+                    data?.let {
+                        if (it.senderId == enviarId && it.receiverId == receberId
+                            || it.senderId == receberId && it.receiverId == enviarId
+                        ) {
+                            listaChat.add(it)
+                        }
                     }
                 }
+                setarImagemBancoFirebase()
             }
-
             override fun onCancelled(error: DatabaseError) {
                 Toast.makeText(applicationContext, error.message, Toast.LENGTH_SHORT).show()
             }
         })
     }
-
-    private fun setarAdaptador() {
-        binding.listaChat.layoutManager =
-            LinearLayoutManager(this@ChatActivity, RecyclerView.VERTICAL, false)
-        binding.listaChat.adapter = ChatMensagemAdapter(listaChat)
+    private fun setarAdaptador(senderImageUrl: String?) {
+        binding.listaChat.layoutManager = LinearLayoutManager(this@ChatActivity, RecyclerView.VERTICAL, false)
+        binding.listaChat.adapter = ChatMensagemAdapter(listaChat, senderImageUrl!!)
     }
 
     private fun sendNotification(notificacao: PushNotification) =

@@ -9,14 +9,14 @@ class LoginController(
     private val binding: ActivityLoginBinding
 ) {
 
-    fun clicarBotaoCadastro() {
+    fun clickButtonRegister() {
         val email = binding.edtEmailLogin.text.toString()
         val senha = binding.edtSenhaLogin.text.toString()
 
         if (email.isEmpty() || senha.isEmpty()) {
-            contexto.mostrarLoginIncorreto("Preencha todos os campos!")
+            contexto.showLoginIncorrect("Preencha todos os campos!")
         } else {
-            contexto.verificarLoginEmailSenha(email, senha)
+            contexto.checkLoginEmailAndPassword(email, senha)
         }
     }
 

@@ -25,15 +25,14 @@ class MenuPrincipalActivity : AppCompatActivity() {
         setContentView(view)
         window.statusBarColor = Color.parseColor("#083087")
 
-        val controler = MenuPrincipalController(binding)
-        controler.listarProdutoPrincipal()
-        controler.abrirCadastraProdutoPrincipal()
-        controler.abrirCadastroExercito()
-        controler.abrirCadastroPolicia()
-        controler.abrirConsultaUsuario()
-        controler.abrirChat()
-        controler.listarProdutoExercito()
-        controler.listarProdutoPolicia()
+        MenuPrincipalController(binding).listarProdutoPrincipal()
+        MenuPrincipalController(binding).abrirCadastraProdutoPrincipal()
+        MenuPrincipalController(binding).abrirCadastroExercito()
+        MenuPrincipalController(binding).abrirCadastroPolicia()
+        MenuPrincipalController(binding).abrirConsultaUsuario()
+        MenuPrincipalController(binding).abrirChat()
+        MenuPrincipalController(binding).listarProdutoExercito()
+        MenuPrincipalController(binding).listarProdutoPolicia()
 
         supportActionBar?.apply {
             setDisplayHomeAsUpEnabled(true)
@@ -43,7 +42,6 @@ class MenuPrincipalActivity : AppCompatActivity() {
         when (item.itemId) {
             R.id.home -> {
                 FirebaseAuth.getInstance().signOut()
-
                 val googleSignInClient =
                     GoogleSignIn.getClient(binding.root.context, GoogleSignInOptions.DEFAULT_SIGN_IN)
                 googleSignInClient.signOut().addOnCompleteListener {
@@ -51,7 +49,6 @@ class MenuPrincipalActivity : AppCompatActivity() {
                     binding.root.context.startActivity(intent)
                 }
             }
-
             else -> {}
         }
         return true

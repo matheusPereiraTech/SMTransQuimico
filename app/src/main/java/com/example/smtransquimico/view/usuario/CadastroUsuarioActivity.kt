@@ -13,8 +13,6 @@ import com.example.smtransquimico.TelefoneMaskWatcher
 import com.example.smtransquimico.controller.CadastroUsuarioController
 import com.example.smtransquimico.databinding.ActivityCadastraUsuarioBinding
 import com.example.smtransquimico.view.login.LoginActivity
-import com.google.android.gms.auth.api.signin.GoogleSignIn
-import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
@@ -118,7 +116,7 @@ class CadastroUsuarioActivity : AppCompatActivity() {
 
     private fun cliqueSalvarUsuario() {
 
-        binding.btnSalvarUsuario.setOnClickListener { view ->
+        binding.btnSalvarUsuario.setOnClickListener {
 
             if (setErroCampoNome() || setErroCampoTelefone() || setErroCampoEmail() || setErroCampoSenha()) {
 
