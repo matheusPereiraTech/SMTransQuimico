@@ -1,97 +1,159 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/fundo_app"
-    android:padding="20dp"
+    android:padding="24dp"
     tools:context=".view.usuario.CadastroUsuarioActivity">
 
+    <TextView
+        android:id="@+id/txtTitulo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Cadastro de Usuário"
+        android:visibility="gone"
+        android:textColor="@color/white"
+        android:textSize="36sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/inputNomeUsuario"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        android:layout_marginBottom="24dp" />
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/inputNomeUsuario"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:textColorHint="@color/black">
+        app:layout_constraintBottom_toTopOf="@+id/inputTelefoneUsuario"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txtTitulo"
+        android:layout_marginBottom="16dp"
+        android:layout_marginTop="16dp"
+        app:boxBackgroundColor="@android:color/white"
+        app:boxStrokeColor="@color/black"
+        app:boxStrokeWidth="1dp"
+        app:boxStrokeWidthFocused="2dp"
+        app:hintTextColor="@color/black">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/edtNomeUsuario"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="20dp"
             android:hint="Nome"
             android:textColorHint="@color/black"
-            android:textSize="35dp" />
+            android:textSize="20sp"
+            android:padding="16dp"
+            android:paddingStart="20dp"
+            android:paddingEnd="20dp" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/inputTelefoneUsuario"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_below="@id/inputNomeUsuario"
-        android:textColorHint="@color/black">
+        app:layout_constraintBottom_toTopOf="@+id/inputEmailUsuario"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/inputNomeUsuario"
+        android:layout_marginBottom="16dp"
+        android:layout_marginTop="8dp"
+        app:boxBackgroundColor="@android:color/white"
+        app:boxStrokeColor="@color/black"
+        app:boxStrokeWidth="1dp"
+        app:boxStrokeWidthFocused="2dp"
+        app:hintTextColor="@color/black">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/edtTelefoneUsuario"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="20dp"
             android:hint="Telefone"
             android:textColorHint="@color/black"
-            android:textSize="35dp" />
+            android:textSize="20sp"
+            android:padding="16dp"
+            android:paddingStart="20dp"
+            android:paddingEnd="20dp" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/inputEmailUsuario"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_below="@id/inputTelefoneUsuario"
-        android:textColorHint="@color/black">
+        app:layout_constraintBottom_toTopOf="@+id/inputSenhaUsuario"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/inputTelefoneUsuario"
+        android:layout_marginBottom="16dp"
+        android:layout_marginTop="8dp"
+        app:boxBackgroundColor="@android:color/white"
+        app:boxStrokeColor="@color/black"
+        app:boxStrokeWidth="1dp"
+        app:boxStrokeWidthFocused="2dp"
+        app:hintTextColor="@color/black">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/edtEmailUsuario"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="20dp"
             android:hint="Email"
-            android:inputType="text"
-            android:maxLines="1"
+            android:inputType="textEmailAddress"
             android:textColorHint="@color/black"
-            android:textSize="35dp" />
+            android:textSize="20sp"
+            android:padding="16dp"
+            android:paddingStart="20dp"
+            android:paddingEnd="20dp" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/inputSenhaUsuario"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_below="@id/inputEmailUsuario"
-        android:textColorHint="@color/black"
+        app:layout_constraintBottom_toTopOf="@+id/btnSalvarUsuario"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/inputEmailUsuario"
+        android:layout_marginBottom="16dp"
+        android:layout_marginTop="8dp"
+        app:boxBackgroundColor="@android:color/white"
+        app:boxStrokeColor="@color/black"
+        app:boxStrokeWidth="1dp"
+        app:boxStrokeWidthFocused="2dp"
+        app:hintTextColor="@color/black"
         app:endIconMode="password_toggle"
-        app:passwordToggleEnabled="true">
+    app:endIconContentDescription="Mostrar Senha"
+    app:hintAnimationEnabled="true">
 
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/edtSenhaUsuario"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="20dp"
-            android:hint="Senha"
-            android:inputType="textPassword"
-            android:textColorHint="@color/black"
-            android:textSize="35dp" />
-    </com.google.android.material.textfield.TextInputLayout>
-
-    <Button
-        android:id="@+id/btnSalvarUsuario"
+    <com.google.android.material.textfield.TextInputEditText
+        android:id="@+id/edtSenhaUsuario"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:background="@drawable/borda_botao"
-        android:text="Salvar"
-        android:textColor="@color/white"
-        android:textSize="30dp" />
-</RelativeLayout>
+        android:hint="Senha"
+        android:inputType="textPassword"
+        android:textColorHint="@color/black"
+        android:textSize="20sp"
+        android:padding="16dp"
+        android:paddingStart="20dp"
+        android:paddingEnd="20dp" />
+</com.google.android.material.textfield.TextInputLayout>
+
+<Button
+android:id="@+id/btnSalvarUsuario"
+android:layout_width="0dp"
+android:layout_height="wrap_content"
+android:layout_marginBottom="24dp"
+android:background="@drawable/borda_botao"
+android:text="Salvar"
+android:textColor="@color/white"
+android:textSize="20sp"
+android:padding="16dp"
+app:layout_constraintBottom_toBottomOf="parent"
+app:layout_constraintEnd_toEndOf="parent"
+app:layout_constraintStart_toStartOf="parent"
+app:layout_constraintHorizontal_bias="0.5" />
+    </androidx.constraintlayout.widget.ConstraintLayout>

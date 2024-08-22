@@ -23,6 +23,7 @@
             android:src="@drawable/ic_sair" />
 
         <TextView
+            android:id="@+id/perfilNome"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="15dp"
