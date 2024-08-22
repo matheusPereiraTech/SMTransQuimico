@@ -22,9 +22,6 @@
         android:theme="@style/Theme.SMTransQuimico"
         tools:targetApi="31">
         <activity
-            android:name=".DetailsActivity"
-            android:exported="false" />
-        <activity
             android:name=".view.chat.ChatBotActivity"
             android:exported="false" />
         <activity
@@ -61,7 +58,7 @@
             android:exported="false"
             android:parentActivityName=".view.menu.MenuPrincipalActivity" />
         <activity
-            android:name=".view.produto.ListaPrincipalProdutoActivity"
+            android:name=".view.produto.ListMainProduceActivity"
             android:exported="false"
             android:parentActivityName=".view.menu.MenuPrincipalActivity" />
         <activity
