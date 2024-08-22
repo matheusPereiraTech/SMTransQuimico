@@ -26,12 +26,6 @@
                 android:layout_gravity="right"
                 android:src="@drawable/atualizar" />
 
-            <ImageView
-                android:id="@+id/imgExcluirListaExercito"
-                android:layout_width="100dp"
-                android:layout_height="50dp"
-                android:layout_gravity="right"
-                android:src="@drawable/excluir" />
         </LinearLayout>
 
         <LinearLayout
